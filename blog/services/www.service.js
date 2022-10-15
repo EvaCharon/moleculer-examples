@@ -52,13 +52,13 @@ module.exports = {
 			const page = Number(req.query.page || 1);
 			try {
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
-				console.log(data);
+				console.log(data.rows);
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
-				return data;
+				return data.rows;
 			} catch (error) {
 				return this.handleErr(error);
 			}
@@ -69,7 +69,7 @@ module.exports = {
 			const page = Number(req.query.page || 1);
 			try {
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
-				console.log(data);
+				console.log(data.rows);
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages
