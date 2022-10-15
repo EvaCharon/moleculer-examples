@@ -13,6 +13,7 @@ const _ = require("lodash");
 const moment = require("moment");
 const slugify = require("slugify");
 const Hashids = require("hashids/cjs");
+const ejs = require('ejs');
 const hashids = new Hashids("secret hash", 6);
 
 function encodeObjectID(id) {
@@ -213,7 +214,9 @@ module.exports = {
 
 		// Set view folder
 		app.set("views", path.join(baseFolder, "views"));
-		app.set("view engine", "ejs");
+		app.engine('.html',ejs.__express);
+		app.set("view engine", "html");
+
 
 		if (process.env.NODE_ENV == "production") {
 			app.locals.cache = "memory";
