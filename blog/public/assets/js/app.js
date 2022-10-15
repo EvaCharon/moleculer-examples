@@ -24,12 +24,12 @@ new Vue({
 
 	mounted: function() {
 		var self = this;
-		axios.get("/api/posts", { params: { limit: 5, sort: "-createdAt" }})
+		axios.get("/")
 			.then(function(res) {
 				self.posts = res.data;
 			});
 
-		axios.get("/api/posts", { params: { limit: 5, sort: "-likes" }})
+		axios.get("/")
 			.then(function(res) {
 				self.bestPosts = res.data;
 			});
