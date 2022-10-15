@@ -35,6 +35,7 @@ module.exports = {
 	methods: {
 		initRoutes(app) {
 			app.get("/", this.allPosts);
+			app.get("/api/posts", this.postsList);
 			app.get("/search", this.searchPosts);
 			app.get("/category/:category", this.categoryPosts);
 			app.get("/author/:author", this.authorPosts);
@@ -46,6 +47,23 @@ module.exports = {
 		 * @param {Request} req
 		 * @param {Response} res
 		 */
+		 async postsList(req, res) {
+			const pageSize = this.settings.pageSize;
+			const page = Number(req.query.page || 1);
+			try {
+				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
+
+				let pageContents = {
+					posts : data.rows,
+					totalPages: data.totalPages
+				};
+				pageContents = await this.appendAdditionalData(pageContents);
+				return data;
+			} catch (error) {
+				return this.handleErr(error);
+			}
+		},
+
 		async allPosts(req, res) {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);

@@ -24,14 +24,14 @@ new Vue({
 
 	mounted: function() {
 		var self = this;
-		axios.get("/")
+		axios.get("/api/posts")
 			.then(function(res) {
-				self.posts = res.data;
+				self.posts = res;
 			});
 
-		axios.get("/")
+		axios.get("/api/posts")
 			.then(function(res) {
-				self.bestPosts = res.data;
+				self.bestPosts = res;
 			});
 	}
 });
