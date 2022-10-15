@@ -213,7 +213,7 @@ module.exports = {
 
 		// Set view folder
 		app.set("views", path.join(baseFolder, "views"));
-		app.set("view engine", "pug");
+		app.set("view engine", "ejs");
 
 		if (process.env.NODE_ENV == "production") {
 			app.locals.cache = "memory";
