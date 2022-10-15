@@ -52,7 +52,7 @@ module.exports = {
 			const page = Number(req.query.page || 1);
 			try {
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
-
+				console.log(data);
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages
@@ -69,7 +69,7 @@ module.exports = {
 			const page = Number(req.query.page || 1);
 			try {
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
-
+				console.log(data);
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages
