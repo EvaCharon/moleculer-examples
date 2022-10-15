@@ -11,7 +11,11 @@
     <script src="/assets/js/util.js"></script>
     <!-- Scripts-->
     <script src="/assets/js/main.js"></script>
-    <!--script(src='//assets/js/app.js')-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- <script src="/assets/js/app.js"></script> -->
+    <script>
+        console.log(data)
+    </script>
 </head>
 <html lang="en">
 
@@ -48,20 +52,20 @@
                 <article v-for="(post,i) in posts">
                     <header>
                         <div class="title">
-                            <h2><a href="/post/{post._id}"></a>{{ post.title }}</h2>
+                            <h2><a href="/post/{post._id}"></a>{{  post.title  }}</h2>
                             <p></p>
                         </div>
                         <div class="meta">
-                            <time class="published">{{moment(post.createdAt).format('LLL')}}</time>
+                            <time class="published">{{ moment(post.createdAt).format('LLL') }}</time>
                             <a class="author" href="/author/{post.author._id}">
-                                <span class="name">{{post.author.fullName}}</span>
+                                <span class="name">{{ post.author.fullName }}</span>
                             </a>
                         </div>
                     </header>
                     <a class="image featured" href="/post/{post._id}">
                         <img src="/images/covers/{post.coverPhoto}" alt="">
                     </a>
-                    <p>{{truncateContent(post.content)}}</p>
+                    <p>{{ truncateContent(post.content) }}</p>
                     <footer>
                         <ul class="actions">
                             <li><a class="button big"
@@ -69,7 +73,7 @@
                         </ul>
                         <ul class="stats">
                             <li><a href="/category/General">General</a></li>
-                            <li><a class="icon fa-heart" href="/like/{post._id}">{{post.likes}}</a></li>
+                            <li><a class="icon fa-heart" href="/like/{post._id}">{{ post.likes }}</a></li>
                             <li><a class="icon fa-comment" href="/post/{post._id}#comments"></a></li>
                         </ul>
                     </footer>
