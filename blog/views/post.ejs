@@ -5,14 +5,14 @@
             <p></p>
         </div>
         <div class="meta">
-            <time class="published">{{ moment(post.createdAt).format('LLL') }}</time>
+            <time class="published"><% moment(post.createdAt).format('LLL') %></time>
             <a class="author" href="/author/<%= post.author._id %>">
                 <span class="name"><%= post.author.fullName %></span>
             </a>
         </div>
     </header>
     <a class="image featured" href="/post/<%= post._id %>">
-        <img src="/images/covers/{post.coverPhoto}" alt="">
+        <img src="/images/covers/<%= post.coverPhoto %>" alt="">
     </a>
     <p><%=  truncateContent(post.content) %></p>
     <footer>
@@ -23,7 +23,7 @@
         <ul class="stats">
             <li><a href="/category/General">General</a></li>
             <li><a class="icon fa-heart" href="/like/<%= post._id %>">{{ post.likes }}</a></li>
-            <li><a class="icon fa-comment" href="/post/<%= post._id}#comments %>"></a></li>
+            <li><a class="icon fa-comment" href="/post/<%= post._id %>#comments"></a></li>
         </ul>
     </footer>
 </article>
