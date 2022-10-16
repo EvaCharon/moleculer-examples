@@ -7,7 +7,7 @@ const Post = require("../models/post.model");
 const CacheCleaner = require("../mixins/cache.cleaner.mixin");
 const Fakerator = require("fakerator");
 const fake = new Fakerator();
-const PostsData = require("../mixins/db/posts.json");
+//const PostsData = require("../mixins/db/posts.json");
 
 module.exports = {
 	name: "posts",
