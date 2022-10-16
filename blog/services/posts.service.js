@@ -66,19 +66,19 @@ module.exports = {
 					return;
 				}
 
-				// Create fake posts
-				// let posts = await this.adapter.insertMany(_.times(20, () => {
-				// 	let fakePost = fake.entity.post();
-				// 	return {
-				// 		title: fakePost.title,
-				// 		content: fake.times(fake.lorem.paragraph, 10).join("\r\n"),
-				// 		category: fake.random.arrayElement(["General", "Tech", "Social", "News"]),
-				// 		author: fake.random.arrayElement(authors)._id,
-				// 		coverPhoto: fake.random.number(1, 20) + ".jpg",
-				// 		createdAt: fakePost.created
-				// 	};
-				// }));
-				let users =  await this.adapter.insertMany(PostsData);
+				//Create fake posts
+				let posts = await this.adapter.insertMany(_.times(20, () => {
+					let fakePost = fake.entity.post();
+					return {
+						title: fakePost.title,
+						content: fake.times(fake.lorem.paragraph, 10).join("\r\n"),
+						category: fake.random.arrayElement(["General", "Tech", "Social", "News"]),
+						author: fake.random.arrayElement(authors)._id,
+						coverPhoto: fake.random.number(1, 20) + ".jpg",
+						createdAt: fakePost.created
+					};
+				}));
+				// let users =  await this.adapter.insertMany(PostsData);
 				this.logger.info(`Generated ${posts.length} posts!`);
 				return this.clearCache();
 			} catch (error) {

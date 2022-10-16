@@ -10,16 +10,25 @@ module.exports = {
 	tracing: {
 		enabled: true,
 		exporter: {
-			type: "Console", // Console exporter is only for development!
+			//type: "Console", // Console exporter is only for development!
+			type: "File",
+			// options: {
+			// 	// Custom logger
+			// 	logger: null,
+			// 	// Using colors
+			// 	colors: true,
+			// 	// Width of row
+			// 	width: 100,
+			// 	// Gauge width in the row
+			// 	gaugeWidth: 40
+			// }
 			options: {
-				// Custom logger
-				logger: null,
-				// Using colors
-				colors: true,
-				// Width of row
-				width: 100,
-				// Gauge width in the row
-				gaugeWidth: 40
+				level: "info", 
+				folder: "./logs",
+				filename: "moleculer-{data}.log",
+				objectPrinter: null,
+				eol: "\n",
+				interval: 1*1000
 			}
 		}
 	},
