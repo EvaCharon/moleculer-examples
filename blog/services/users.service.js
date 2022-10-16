@@ -7,7 +7,7 @@ const User = require("../models/user.model");
 const CacheCleaner = require("../mixins/cache.cleaner.mixin");
 const Fakerator = require("fakerator");
 const fake = new Fakerator();
-const PostsData = require("../mixins/db/posts.json");
+
 /*
 const bcrypt = require("bcrypt");
 function hashPassword(password) {
@@ -81,7 +81,7 @@ module.exports = {
 			// 		author: false
 			// 	};
 			// }));
-			let users =  await this.adapter.insertMany(PostsData);
+			
 			this.logger.info(`Generated ${users.length} users!`);
 			return this.clearCache();
 		}
