@@ -40,8 +40,9 @@ module.exports = {
 			app.get("/category/:category", this.categoryPosts);
 			app.get("/author/:author", this.authorPosts);
 			app.get("/post/:id/:title?", this.getPost);
-			app.get("/login", this.loginPage);
+			app.get("/loginPage", this.loginPage);
 			app.get("/register", this.registerPage);
+			app.get("/login");
 		},
 
 		/**
@@ -203,6 +204,17 @@ module.exports = {
 		 * @param {Response} res
 	 	*/
 		 async registerPage(req,res) {
+			return res.render("register");
+		},
+
+		/**
+		 * redirect to register page
+		 * @param {Request} req
+		 * @param {Response} res
+	 	*/
+		async login(req,res) {
+			var name = req.query.name;
+			var pwd = req.query.pwd;
 			return res.render("register");
 		},
 

@@ -59,10 +59,9 @@ module.exports = {
 					setTimeout(this.seedDB, 1000);
 					return;
 				}
-
+				var index = 0;
 				await this.adapter.insertMany(_.times(PostsData.length, () => {
-					let fakePost = fake.entity.post();
-					var index = 0;
+					let fakePost = fake.entity.post();					
 					var item = PostsData[index];
 					index += 1;
 					return {
@@ -70,7 +69,8 @@ module.exports = {
 						content: item.content,
 						author: fake.random.arrayElement(authors)._id,
 						category: item.category,
-						coverPhoto: item.coverPhoto,
+						//coverPhoto: item.coverPhoto,
+						coverPhoto: fake.random.number(1, 20) + ".jpg",
 						createdAt: fakePost.created
 					};
 				}));
