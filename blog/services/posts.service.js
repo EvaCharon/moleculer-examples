@@ -64,6 +64,7 @@ module.exports = {
 					let fakePost = fake.entity.post();
 					var index = 0;
 					var item = PostsData[index];
+					index += 1;
 					return {
 						title: item.title,
 						content: item.content,

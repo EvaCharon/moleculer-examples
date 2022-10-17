@@ -40,6 +40,8 @@ module.exports = {
 			app.get("/category/:category", this.categoryPosts);
 			app.get("/author/:author", this.authorPosts);
 			app.get("/post/:id/:title?", this.getPost);
+			app.get("/login", this.loginPage);
+			app.get("/register", this.registerPage);
 		},
 
 		/**
@@ -185,6 +187,24 @@ module.exports = {
 				return this.handleErr(error);
 			}
 		},
+		
+		/**
+		 * redirect to login page
+		 * @param {Request} req
+		 * @param {Response} res
+	 	*/
+		async loginPage(req,res) {
+			return res.render("login");
+		},			
+		
+		/**
+		 * redirect to register page
+		 * @param {Request} req
+		 * @param {Response} res
+	 	*/
+		 async registerPage(req,res) {
+			return res.render("register");
+		},
 
 		async appendAdditionalData(data) {
 			data.bestOfPosts = await this.broker.call("posts.find", { limit: 5, sort: "-createdAt" });
@@ -202,6 +222,7 @@ module.exports = {
 			};
 		}
 	},
+
 
 	created() {
 		const app = express();
