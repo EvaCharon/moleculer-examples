@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Moleculer Blog Example</title>
+        <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+
+
+
+
+
+
+
+<body class="">
+    <div id="app">
+        <div id="wrapper">
+            <header id="header">
+                <h1><a href="/">Mol BlogEx</a></h1>
+                <nav class="links">
+                    <ul>
+                        <li><a href="/category/General">General</a></li>
+                        <li><a href="/category/Tech">Tech</a></li>
+                        <li><a href="/category/Social">Social</a></li>
+                        <li><a href="/category/News">News</a></li>
+                    </ul>
+                </nav>
+                <nav class="main">
+                    <ul>
+                        <li class="search"><a class="fa-search" href="#search">Search</a>
+                            <form id="search" method="get" action="/search"><input type="text" name="query"
+                                    placeholder="Search"></form>
+                        </li>
+                        <li class="menu"><a class="fa-bars" href="#menu">Menu</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div id="main">
+                <section id="intro"><a class="logo" href="#"><img src="/images/logo.png" alt=""></a>
+                    <header>
+                        <h2><a href="/">Moleculer</a></h2>
+                        <p>Blog example site with <a href="http://moleculer.services">Moleculer</a></p>
+                    </header>
+                </section>
+                <section>
+
+
+
+
+
+                    <section>
+                        <div class="container d-flex align-items-center">
+                            <div class="form-holder has-shadow">
+                                <div class="row">
+                                    <!-- Logo & Information Panel-->
+                                    <div class="col-lg-6">
+                                        <div class="info d-flex align-items-center">
+                                            <div class="content">
+                                                <div class="logo">
+                                                    <h1><strong>Welcome!</strong></h1>
+                                                </div>
+                                                <p>Login to start shopping!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 bg-white">
+                            <div class="form d-flex align-items-center">
+                                <div class="content">
+                                    <form id="login-list" action="#" th:action="@{/login_message}" th:object="${buyer}" method="post" class="form-validate" novalidate="novalidate">
+                                        <div class="form-group">
+                                            <input id="login-username" class="input-material" type="text" name="user-name" placeholder="" th:field="*{name}"/>
+                                            <label for="login-username" class="label-material active">userID</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="login-password" type="password" name="password-raw" placeholder="" th:field="*{password}" class="input-material"/>
+                                            <label for="login-password" class="label-material active">Passward</label>
+                                        </div><button class="submit" type="submit" name="login-done">登录</button>
+                                        <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+                                    </form>
+                                    <a href="#" class="forgot-pass" style="margin-top:30px"></a><br/><small>No account? </small><a href="/register" class="signup">sign up</a>
+                                    
+                                    <div class="alert alert-warning alert-dismissible" style="background-color:#fff;" th:if="${msg!=null}">
+                                    <p th:text="${msg}"><i class="icon fa fa-warning"></i><span id="rtn-msg" style="color:orangered;padding-left:10px;"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <ul class="actions vertical">
+                            <li><a class="button big fit" href="/login.html">Log In</a></li>
+                        </ul>
+                    </section>
+
+
+
+                    
+                </section>>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.3.4"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/lodash@4.17.4"></script>
+    <script src="https://unpkg.com/moment@2.18.1"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/skel.min.js"></script>
+    <script src="/assets/js/util.js"></script>
+    <!-- Scripts-->
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/app.js"></script>
+    <section id="menu">
+        <!-- Search-->
+        <section>
+            <form id="search" method="get" action="/search">
+                <input type="text" name="query" placeholder="Search">
+                <li>
+                    <a class="fa-search" href="#search">Search</a>
+                </li>
+            </form>  
+        </section><!-- Links-->
+        <section>
+            <ul class="links">
+                <li><a href="/category/General">
+                        <h3>General</h3>
+                    </a></li>
+                <li><a href="/category/Tech">
+                        <h3>Tech</h3>
+                    </a></li>
+                <li><a href="/category/Social">
+                        <h3>Social</h3>
+                    </a></li>
+                <li><a href="/category/News">
+                        <h3>News</h3>
+                    </a></li>
+            </ul>
+        </section><!-- Actions-->
+
+    </section>
+</body>
+</html>

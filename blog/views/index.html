@@ -63,7 +63,7 @@
                                     href="/post/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>">Continue Reading</a></li>
                         </ul>
                         <ul class="stats">
-                            <li><a href="/category/General">General</a></li>
+                            <li><a href="/category/<%= post.category %>"><%= post.category %></a></li>
                             <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(post._id) %>"><%= post.likes %></a></li>
                             <li><a class="icon fa-comment" href="/post/<%= encodeObjectID(post._id) %>#comments"></a></li>
                         </ul>
@@ -94,7 +94,12 @@
     <section id="menu">
         <!-- Search-->
         <section>
-            <form id="search" method="get" action="/search"><input type="text" name="query" placeholder="Search"></form>
+            <form id="search" method="get" action="/search">
+                <input type="text" name="query" placeholder="Search">
+                <li>
+                    <a class="fa-search" href="#search">Search</a>
+                </li>
+            </form>  
         </section><!-- Links-->
         <section>
             <ul class="links">
@@ -114,7 +119,7 @@
         </section><!-- Actions-->
         <section>
             <ul class="actions vertical">
-                <li><a class="button big fit" href="#">Log In</a></li>
+                <li><a class="button big fit" href="/login.html">Log In</a></li>
             </ul>
         </section>
     </section>
