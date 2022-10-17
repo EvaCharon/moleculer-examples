@@ -41,7 +41,7 @@ module.exports = {
 			app.get("/author/:author", this.authorPosts);
 			app.get("/post/:id/:title?", this.getPost);
 			app.get("/loginPage", this.loginPage);
-			app.get("/register", this.registerPage);
+			app.get("/registerPage", this.registerPage);
 			app.get("/login");
 		},
 
@@ -215,7 +215,7 @@ module.exports = {
 		async login(req,res) {
 			var name = req.query.name;
 			var pwd = req.query.pwd;
-			return res.render("register");
+			
 		},
 
 		async appendAdditionalData(data) {

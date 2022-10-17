@@ -5,7 +5,7 @@
   "author": "Wikipedia",
   "likes": 5,
   "category": "Distributed Architecture",
-  "coverPhoto": "doker.jpg",
+  "coverPhoto": "1.jpg",
   "createdAt": "15 October 2022 at 11:21"
 },{
   "_id": "2",
@@ -14,7 +14,7 @@
   "author": "Wikipedia",
   "likes": 3,
   "category": "Distributed Architecture",
-  "coverPhoto": "microservices.jpg",
+  "coverPhoto": "2.jpg",
   "createdAt": "12 October 2022 at 23:31"
 },{
   "_id": "3",
@@ -23,7 +23,7 @@
   "author": "Wikipedia",
   "likes": 3,
   "category": "Deep Learning",
-  "coverPhoto": "GNN.jpg",
+  "coverPhoto": "3.jpg",
   "createdAt": "14 October 2022 at 14:54 "
 },{
   "_id": "4",
@@ -32,7 +32,7 @@
   "author": "Wikipedia",
   "likes": 4,
   "category": "Database",
-  "coverPhoto": "mongodb.jpg",
+  "coverPhoto": "4.jpg",
   "createdAt": "12 September 2022 at 00:37 "
 },{
   "_id": "5",
@@ -41,6 +41,6 @@
   "author": "Wikipedia",
   "likes": 1,
   "category": "database",
-  "coverPhoto": "relationalDatabase.jpg",
+  "coverPhoto": "5.jpg",
   "createdAt": "20 August 2022 at 16:16"
 }]

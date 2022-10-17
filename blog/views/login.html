@@ -62,7 +62,7 @@
                                                 <div class="logo">
                                                     <h1><strong>Welcome!</strong></h1>
                                                 </div>
-                                                <p>Login to start shopping!</p>
+                                                <p>Login to start learning!</p>
                                             </div>
                                         </div>
                                     </div>
@@ -74,16 +74,17 @@
                                 <div class="content">
                                     <form id="login-list" action="#" th:action="@{/login_message}" th:object="${buyer}" method="post" class="form-validate" novalidate="novalidate">
                                         <div class="form-group">
-                                            <input id="login-username" class="input-material" type="text" name="user-name" placeholder="" th:field="*{name}"/>
                                             <label for="login-username" class="label-material active">userID</label>
+                                            <input id="login-username" class="input-material" type="text" name="user-name" placeholder="" th:field="*{name}"/>
                                         </div>
                                         <div class="form-group">
-                                            <input id="login-password" type="password" name="password-raw" placeholder="" th:field="*{password}" class="input-material"/>
                                             <label for="login-password" class="label-material active">Passward</label>
-                                        </div><button class="submit" type="submit" name="login-done">登录</button>
-                                        <!-- This should be submit button but I replaced it with <a> for demo purposes-->
-                                    </form>
-                                    <a href="#" class="forgot-pass" style="margin-top:30px"></a><br/><small>No account? </small><a href="/register" class="signup">sign up</a>
+                                            <input id="login-password" type="password" name="password-raw" placeholder="" th:field="*{password}" class="input-material"/>
+                                            <ul class="actions vertical">
+                                                <li><a class="button big fit" href="/login">Log In</a></li>
+                                            </ul>
+                                        </form>
+                                    <a href="#" class="forgot-pass" style="margin-top:30px"></a><br/><small>No account? </small><a href="/registerPage" class="signup"><u>sign up</u></b></a>
                                     
                                     <div class="alert alert-warning alert-dismissible" style="background-color:#fff;" th:if="${msg!=null}">
                                     <p th:text="${msg}"><i class="icon fa fa-warning"></i><span id="rtn-msg" style="color:orangered;padding-left:10px;"></span></p>
@@ -92,14 +93,6 @@
                             </div>
                         </div>
 
-
-
-
-
-
-                        <ul class="actions vertical">
-                            <li><a class="button big fit" href="/login.html">Log In</a></li>
-                        </ul>
                     </section>
 
 
@@ -122,14 +115,7 @@
     <script src="/assets/js/app.js"></script>
     <section id="menu">
         <!-- Search-->
-        <section>
-            <form id="search" method="get" action="/search">
-                <input type="text" name="query" placeholder="Search">
-                <li>
-                    <a class="fa-search" href="#search">Search</a>
-                </li>
-            </form>  
-        </section><!-- Links-->
+        <!-- Links-->
         <section>
             <ul class="links">
                 <li><a href="/category/General">

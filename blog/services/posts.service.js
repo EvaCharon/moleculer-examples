@@ -69,8 +69,8 @@ module.exports = {
 						content: item.content,
 						author: fake.random.arrayElement(authors)._id,
 						category: item.category,
-						//coverPhoto: item.coverPhoto,
-						coverPhoto: fake.random.number(1, 20) + ".jpg",
+						coverPhoto: item.coverPhoto,
+						//coverPhoto: fake.random.number(1, 20) + ".jpg",
 						createdAt: fakePost.created
 					};
 				}));
