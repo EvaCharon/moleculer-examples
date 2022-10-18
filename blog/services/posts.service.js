@@ -63,7 +63,8 @@ module.exports = {
 					return {
 						title: item.title,
 						content: item.content,
-						author: user._id,
+						author: fake.random.arrayElement(authors)._id,
+						//author:user._id,
 						category: item.category,
 						coverPhoto: item.coverPhoto,
 						createdAt: fakePost.created
