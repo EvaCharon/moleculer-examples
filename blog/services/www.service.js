@@ -221,7 +221,7 @@ module.exports = {
 				}
 				else{ u = data[0];}
 				if(u.password!=pwd){
-					errorMsg = "Password is incorrect."+u.password+Object.keys(u));
+					errorMsg = "Password is incorrect."+u.password+Object.keys(u);
 				}
 				let pageContents = {
 					msg : errorMsg,
