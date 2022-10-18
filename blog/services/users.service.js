@@ -35,7 +35,7 @@ module.exports = {
 	model: User,
 
 	settings: {
-		fields: ["_id", "username", "fullName", "email", "avatar", "author"]
+		fields: ["_id", "username","password", "fullName", "email", "avatar", "author"]
 	},
 
 	actions: {

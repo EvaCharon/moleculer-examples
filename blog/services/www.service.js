@@ -219,8 +219,8 @@ module.exports = {
 				if (data.length == 0){
 					errorMsg = "Username doesn't exist.";
 				}
-				else if(data.password!=pwd){
-					errorMsg = "Password is incorrect."+data.password+Object.keys(data[0]);
+				else if(data[0].password!=pwd){
+					errorMsg = "Password is incorrect."+data[0].password+Object.keys(data[0]);
 				}
 				let pageContents = {
 					msg : errorMsg,
@@ -229,7 +229,7 @@ module.exports = {
 				if(data.password == pwd){
 					this.settings.ifLogin = true;
 					pageContents = {
-						user: u,
+						user: data[0],
 						ifLogin: this.settings.ifLogin
 					}
 					return res.render("userHome",pageContents);
