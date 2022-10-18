@@ -36,7 +36,6 @@ module.exports = {
 	methods: {
 		initRoutes(app) {
 			app.get("/", this.allPosts);
-			app.get("/api/posts", this.postsList);
 			app.get("/search", this.searchPosts);
 			app.get("/category/:category", this.categoryPosts);
 			app.get("/author/:author", this.authorPosts);
@@ -47,28 +46,7 @@ module.exports = {
 			app.get("/userHome/:id");
 		},
 
-		/**
-		 *
-		 * @param {Request} req
-		 * @param {Response} res
-		 */
-		 async postsList(req, res) {
-			const pageSize = this.settings.pageSize;
-			const page = Number(req.query.page || 1);
-			try {
-				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
-				console.log(data.rows);
-				let pageContents = {
-					posts : data.rows,
-					totalPages: data.totalPages,
-					ifLogin: this.settings.ifLogin
-				};
-				pageContents = await this.appendAdditionalData(pageContents);
-				return data.rows;
-			} catch (error) {
-				return this.handleErr(error);
-			}
-		},
+
 
 		async allPosts(req, res) {
 			const pageSize = this.settings.pageSize;
@@ -224,13 +202,13 @@ module.exports = {
 		 * @param {Response} res
 	 	*/
 		async login(req,res) {
-			let username = req.query.username;
+			let name = req.query.username;
 			let pwd = req.query.pwd;
 			let errorMsg = "";
 			try{
-				const data = await this.broker.call("users.find",{query:{name:username}});
+				const data = await this.broker.call("users.find",{query:{username:name}});
 				console.log(data);
-				if (!data){
+				if (data.length == 0){
 					errorMsg = "Username doesn't exist.";
 				}else if(data.password!=pwd){
 					errorMsg = "Password is incorrect.";
@@ -252,6 +230,45 @@ module.exports = {
 				return this.handleErr(error);
 			}	
 				
+		},
+
+				/**
+		 * redirect to register page
+		 * @param {Request} req
+		 * @param {Response} res
+	 	*/
+		 async register(req,res) {
+			let name = req.query.username;
+			let errorMsg = "";
+			try{
+				const data = await this.broker.call("users.find",{query:{username:name}});
+				console.log(data);
+				if (data.length != 0){
+					errorMsg = "Username exists.";
+					let pageContents = {
+						msg : errorMsg,
+						ifLogin: this.settings.ifLogin
+					};
+				return res.render("register", pageContents);
+				}
+				let userInfo = {
+					username: req.query.username,
+					password: req.query.pwd,
+					fullName: req.query.fullname,
+					email: req.query.email,
+					avatar: fake.internet.avatar(),
+					author: false
+				};
+				await this.broker.call("posts.insert",userInfo);
+				this.settings.ifLogin = true;
+				let	pageContents = {
+					user: userInfo,
+					ifLogin: this.settings.ifLogin
+				}
+				return res.render("userHome",pageContents);
+			} catch (error) {
+				return this.handleErr(error);
+			}		
 		},
 
 		async appendAdditionalData(data) {
@@ -314,7 +331,6 @@ module.exports = {
 		}
 
 		this.initRoutes(app);
-
 		this.app = app;
 	},
 

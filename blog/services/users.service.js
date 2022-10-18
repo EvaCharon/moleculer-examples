@@ -68,6 +68,14 @@ module.exports = {
 				avatar: fake.internet.avatar(),
 				author: true
 			});
+			await this.adapter.insert({
+				username: "wikipedia",
+				password: "admin",
+				fullName: "Wikipedia",
+				email: "wikipedia@blog.moleculer.services",
+				avatar: fake.internet.avatar(),
+				author: true
+			});
 
 			// Create fake commenter users
 			// let users =  await this.adapter.insertMany(_.times(30, () => {
