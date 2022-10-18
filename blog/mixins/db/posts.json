@@ -37,10 +37,10 @@
 },{
   "_id": "5",
   "title": "Relational database",
-  "content": "A relational database is a (most commonly digital) database based on the relational model of data, as proposed by E. F. Codd in 1970. A system used to maintain relational databases is a relational database management system (RDBMS). Many relational database systems are equipped with the option of using the SQL (Structured Query Language) for querying and maintaining the database.\n\rA relational model organizes data into one or more tables (or relations) of columns and rows, with a unique key identifying each row. Rows are also called records or tuples. Columns are also called attributes. Generally, each table/relation represents one entity type (such as customer or product). The rows represent instances of that type of entity (such as Lee or chair) and the columns representing values attributed to that instance (such as address or price).\n\rFor example, each row of a class table corresponds to a class, and a class corresponds to multiple students, so the relationship between the class table and the student table is one to many",
+  "content": "A relational database is a (most commonly digital) database based on the relational model of data, as proposed by E. F. Codd in 1970. A system used to maintain relational databases is a relational database management system (RDBMS). Many relational database systems are equipped with the option of using the SQL (Structured Query Language) for querying and maintaining the database.\n\rA relational model organizes data into one or more tables (or relations) of columns and rows, with a unique key identifying each row. Rows are also called records or tuples. Columns are also called attributes. Generally, each table/relation represents one entity type (such as customer or product). The rows represent instances of that type of entity (such as Lee or chair) and the columns representing values attributed to that instance (such as address or price).\n\rFor example, each row of a class table corresponds to a class, and a class corresponds to multiple students, so the relationship between the class table and the student table is one to many.",
   "author": "Wikipedia",
   "likes": 1,
-  "category": "database",
+  "category": "Database",
   "coverPhoto": "5.jpg",
   "createdAt": "20 August 2022 at 16:16"
 }]

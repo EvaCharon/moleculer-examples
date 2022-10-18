@@ -43,6 +43,7 @@ module.exports = {
 			app.get("/loginPage", this.loginPage);
 			app.get("/registerPage", this.registerPage);
 			app.get("/login",this.login);
+			app.get("/register",this.register);
 			app.get("/userHome/:id");
 		},
 
@@ -136,7 +137,8 @@ module.exports = {
 				let pageContents = {
 					query : search,
 					posts : data.rows,
-					totalPages: data.totalPages
+					totalPages: data.totalPages,
+					ifLogin :this.settings.ifLogin
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);

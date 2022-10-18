@@ -57,7 +57,7 @@ module.exports = {
 				}
 				let authors = new Array();
 				for(let i=0;i<PostsData.length;i++){
-					authors[i] = users.filter(u => PostsData[i].author)[0]._id;
+					authors[i] = users.find(u =>u.author=PostsData[i].author)[0]._id;
 				}
 				// let user = await this.broker.call("users.find",{query:{username:item.author}});
 				let index = 0;
