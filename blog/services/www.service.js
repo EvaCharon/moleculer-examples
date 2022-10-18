@@ -220,7 +220,7 @@ module.exports = {
 					errorMsg = "Username doesn't exist.";
 				}
 				else if(data.password!=pwd){
-					errorMsg = "Password is incorrect."+data.password+Object.keys(data);
+					errorMsg = "Password is incorrect."+data.password+Object.keys(data[0]);
 				}
 				let pageContents = {
 					msg : errorMsg,
@@ -268,7 +268,7 @@ module.exports = {
 					avatar: fake.internet.avatar(),
 					author: false
 				};
-				await this.broker.call("users.insert",userInfo);
+				await this.broker.call("users.create",userInfo);
 				this.settings.ifLogin = true;
 				let	pageContents = {
 					user: userInfo,

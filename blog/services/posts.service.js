@@ -68,9 +68,8 @@ module.exports = {
 					let item = PostsData[index];
 					index += 1;
 					return {
-						title: item.title+Object.keys(authors1),
+						title: item.title+Object.keys(authors1[0]),
 						content: item.content,
-						// author: fake.random.arrayElement(authors)._id,
 						author: authors[index],
 						category: item.category,
 						coverPhoto: item.coverPhoto,
