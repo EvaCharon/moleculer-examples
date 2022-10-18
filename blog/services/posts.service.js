@@ -57,8 +57,8 @@ module.exports = {
 				}
 				let authors = new Array();
 				for(let i=0;i<PostsData.length;i++){
-					//authors[i] = users.find(u => u.username==PostsData[i].author);
-					authors[i] = users.filter(u => u.username==PostsData[i].author)[0]._id;
+					// authors[i] = users.find(u => u.username==PostsData[i].author);
+					authors[i] = users.filter(u => PostsData[i].author)[0]._id;
 				}
 
 				let index = 0;

@@ -215,11 +215,13 @@ module.exports = {
 			let errorMsg = "";
 			try{
 				const data = await this.broker.call("users.find",{query:{username:name}});
-				let u = data[0];
+				let u = data;
 				if (data.length == 0){
 					errorMsg = "Username doesn't exist.";
-				}else if(u.password!=pwd){
-					errorMsg = "Password is incorrect."+u.password+u.toString();
+				}
+				else{ u = data[0];}
+				if(u.password!=pwd){
+					errorMsg = "Password is incorrect."+u.password+Object.keys(u));
 				}
 				let pageContents = {
 					msg : errorMsg,
