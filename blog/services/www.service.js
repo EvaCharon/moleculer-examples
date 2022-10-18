@@ -43,7 +43,7 @@ module.exports = {
 			app.get("/post/:id/:title?", this.getPost);
 			app.get("/loginPage", this.loginPage);
 			app.get("/registerPage", this.registerPage);
-			app.get("/login");
+			app.get("/login",this.login);
 			app.get("/userHome/:id");
 		},
 
@@ -202,7 +202,11 @@ module.exports = {
 		 * @param {Response} res
 	 	*/
 		async loginPage(req,res) {
-			return res.render("login");
+			let pageContents = {
+				msg : null,
+				ifLogin: this.settings.ifLogin
+			};
+			return res.render("loginPage",pageContents);
 		},			
 		
 		/**
@@ -230,14 +234,18 @@ module.exports = {
 				}else if(data.password!=pwd){
 					errorMsg = "Password is incorrect.";
 				}
-				if(data.password == pwd){
-					this.settings.ifLogin = true;
-					return res.render("userHome");
-				}
 				let pageContents = {
 					msg : errorMsg,
 					ifLogin: this.settings.ifLogin
 				};
+				if(data.password == pwd){
+					this.settings.ifLogin = true;
+					pageContents = {
+						user: data,
+						ifLogin: this.settings.ifLogin
+					}
+					return res.render("userHome",pageContents);
+				}
 				return res.render("loginPage", pageContents);
 			} catch (error) {
 				return this.handleErr(error);
