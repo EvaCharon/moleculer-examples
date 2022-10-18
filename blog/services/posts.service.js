@@ -54,17 +54,22 @@ module.exports = {
 					setTimeout(this.seedDB, 1000);
 					return;
 				}
+				let authors = new Array();
+				for(let i=0;i<PostsData.length;i++){
+					let user = await this.broker.call("users.find",{query:{username:PostsData[i].author}});
+					authors[i] = user._id;
+				}
+				// let user = await this.broker.call("users.find",{query:{username:item.author}});
 				let index = 0;
 				await this.adapter.insertMany(_.times(PostsData.length, () => {
 					let fakePost = fake.entity.post();					
 					let item = PostsData[index];
-					let user = await this.broker.call("users.find",{query:{username:item.author}});
 					index += 1;
 					return {
 						title: item.title+user._id,
 						content: item.content,
-						author: fake.random.arrayElement(authors)._id,
-						//author:user._id,
+						// author: fake.random.arrayElement(authors)._id,
+						author: authors[i],
 						category: item.category,
 						coverPhoto: item.coverPhoto,
 						createdAt: fakePost.created
