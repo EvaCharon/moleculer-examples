@@ -203,10 +203,10 @@ module.exports = {
 	 	*/
 		async loginPage(req,res) {
 			let pageContents = {
-				msg : null,
+				msg : "",
 				ifLogin: this.settings.ifLogin
 			};
-			return res.render("loginPage",pageContents);
+			return res.render("login",pageContents);
 		},			
 		
 		/**
@@ -229,6 +229,7 @@ module.exports = {
 			let errorMsg = "";
 			try{
 				const data = await this.broker.call("users.find",{query:{name:username}});
+				console.log(data);
 				if (!data){
 					errorMsg = "Username doesn't exist.";
 				}else if(data.password!=pwd){
@@ -246,7 +247,7 @@ module.exports = {
 					}
 					return res.render("userHome",pageContents);
 				}
-				return res.render("loginPage", pageContents);
+				return res.render("login", pageContents);
 			} catch (error) {
 				return this.handleErr(error);
 			}	
