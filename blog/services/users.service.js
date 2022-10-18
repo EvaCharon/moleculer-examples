@@ -69,26 +69,13 @@ module.exports = {
 				author: true
 			});
 			await this.adapter.insert({
-				username: "wikipedia",
+				username: "Wikipedia",
 				password: "admin",
 				fullName: "Wikipedia",
 				email: "wikipedia@blog.moleculer.services",
 				avatar: fake.internet.avatar(),
 				author: true
 			});
-
-			// Create fake commenter users
-			// let users =  await this.adapter.insertMany(_.times(30, () => {
-			// 	let fakeUser = fake.entity.user();
-			// 	return {
-			// 		username: fakeUser.userName,
-			// 		password: fakeUser.password,
-			// 		fullName: fakeUser.firstName + " " + fakeUser.lastName,
-			// 		email: fakeUser.email,
-			// 		avatar: fakeUser.avatar,
-			// 		author: false
-			// 	};
-			// }));
 			
 			this.logger.info(`Generated ${users.length} users!`);
 			return this.clearCache();

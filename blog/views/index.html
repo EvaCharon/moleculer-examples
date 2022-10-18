@@ -109,11 +109,15 @@
                     </a></li>
             </ul>
         </section><!-- Actions-->
+        <% if(ifLogin){ %>
+            Welcome!
+        <% }else{ %>
         <section>
             <ul class="actions vertical">
                 <li><a class="button big fit" href="/loginPage">Log In</a></li>
             </ul>
         </section>
+        <% } %>
     </section>
 </body>
 

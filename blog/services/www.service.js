@@ -193,7 +193,11 @@ module.exports = {
 		 * @param {Response} res
 	 	*/
 		 async registerPage(req,res) {
-			return res.render("register");
+			let pageContents = {
+				msg : "",
+				ifLogin: this.settings.ifLogin
+			};
+			return res.render("register",pageContents);
 		},
 
 		/**
@@ -211,7 +215,7 @@ module.exports = {
 				if (data.length == 0){
 					errorMsg = "Username doesn't exist.";
 				}else if(data.password!=pwd){
-					errorMsg = "Password is incorrect.";
+					errorMsg = "Password is incorrect."+data.password;
 				}
 				let pageContents = {
 					msg : errorMsg,

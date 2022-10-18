@@ -49,11 +49,6 @@ module.exports = {
 			try {
 				this.logger.info("Seed Posts collection...");
 				await this.waitForServices(["users"]);
-
-				let users = await this.broker.call("users.find");
-
-				let authors = users.filter(u => u.author);
-
 				if (authors.length == 0) {
 					this.logger.info("Waiting for `users` seed...");
 					setTimeout(this.seedDB, 1000);
@@ -62,12 +57,13 @@ module.exports = {
 				var index = 0;
 				await this.adapter.insertMany(_.times(PostsData.length, () => {
 					let fakePost = fake.entity.post();					
-					var item = PostsData[index];
+					let item = PostsData[index];
+					let user = await this.broker.call("users.find",{query:{username:item.author}});
 					index += 1;
 					return {
 						title: item.title,
 						content: item.content,
-						author: fake.random.arrayElement(authors)._id,
+						author: user._id,
 						category: item.category,
 						coverPhoto: item.coverPhoto,
 						createdAt: fakePost.created
