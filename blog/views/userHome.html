@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Viewer</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
-</head>
 <html lang="en">
-
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tech Viewer</title>
+        <link rel="stylesheet" href="/assets/css/main.css">
+</head>
 <body class="">
     <div id="app">
         <div id="wrapper">
@@ -38,38 +36,21 @@
                         <h2><a href="/">Tech Viewer</a></h2>
                         <p>Blog about computer Technology making easier learning</a></p>
                     </header>
-                </section><!-- Post-->
-                <article class="post">
-                    <header>
-                        <div class="title">
-                            <h2><a href="/post/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>"><%= post.title %></a></h2>
-                            <p></p>
-                        </div>
-                        <div class="meta">
-                            <time class="published"><%= moment(post.createdAt).format('LLL') %></time>
-                            <a class="author" href="/author/<%= encodeObjectID(post.author._id) %>">
-                                <span class="name"><%= post.author.fullName %></span>
-                            </a>
-                        </div>
-                    </header>
-                    <a class="image featured" href="/post/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>">
-                        <img src="/images/covers/<%= post.coverPhoto %>" alt="">
-                    </a>
-                    <p><%=  post.content %></p>
-                    <footer>
-                
-                        <ul class="stats">
-                            <li><a href="/category/Distributed Architecture">Distributed Architecture</a></li>
-                            <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(post._id) %>"><%= post.likes %></a></li>
-                            <li><a class="icon fa-comment" href="/post/<%= encodeObjectID(post._id) %>#comments"></a></li>
-                        </ul>
-                    </footer>
-                </article>
-                <!-- Pagination-->
-                <ul class="actions pagination">
-                    <li><a class="disabled button big previous" href="">Previous Page</a></li>
-                    <li><a class="disabled button big next" href="#">Next Page</a></li>
-                </ul>
+                </section>
+                <section>
+
+
+
+
+
+                    <section>
+                       Welcome!
+                    </section>
+
+
+
+                    
+                </section>
             </div>
         </div>
     </div>
@@ -84,14 +65,9 @@
     <!-- Scripts-->
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/app.js"></script>
-    <script>
-        console.log(posts)
-    </script>
     <section id="menu">
         <!-- Search-->
-        <section>
-            <form id="search" method="get" action="/search"><input type="text" name="query" placeholder="Search"></form>
-        </section><!-- Links-->
+        <!-- Links-->
         <section>
             <ul class="links">
                 <li><a href="/category/Distributed Architecture">
@@ -108,12 +84,6 @@
                     </a></li>
             </ul>
         </section><!-- Actions-->
-        <section>
-            <ul class="actions vertical">
-                <li><a class="button big fit" href="#">Log In</a></li>
-            </ul>
-        </section>
+
     </section>
 </body>
-
-</html>

@@ -29,7 +29,8 @@ module.exports = {
 
 	settings: {
 		port: process.env.PORT || 3000,
-		pageSize: 5
+		pageSize: 5,
+		ifLogin: false
 	},
 
 	methods: {
@@ -43,6 +44,7 @@ module.exports = {
 			app.get("/loginPage", this.loginPage);
 			app.get("/registerPage", this.registerPage);
 			app.get("/login");
+			app.get("/userHome/:id");
 		},
 
 		/**
@@ -58,7 +60,8 @@ module.exports = {
 				console.log(data.rows);
 				let pageContents = {
 					posts : data.rows,
-					totalPages: data.totalPages
+					totalPages: data.totalPages,
+					ifLogin: this.settings.ifLogin
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return data.rows;
@@ -75,7 +78,8 @@ module.exports = {
 				console.log(data.rows);
 				let pageContents = {
 					posts : data.rows,
-					totalPages: data.totalPages
+					totalPages: data.totalPages,
+					ifLogin: this.settings.ifLogin
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -99,7 +103,8 @@ module.exports = {
 
 				let pageContents = {
 					posts : data.rows,
-					totalPages: data.totalPages
+					totalPages: data.totalPages,
+					ifLogin: this.settings.ifLogin
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -125,7 +130,8 @@ module.exports = {
 
 				let pageContents = {
 					posts : data.rows,
-					totalPages: data.totalPages
+					totalPages: data.totalPages,
+					ifLogin: this.settings.ifLogin
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -181,12 +187,13 @@ module.exports = {
 				let pageContents = {
 					post : post,
 					title : post.title,
+					ifLogin :this.settings.ifLogin
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("post", pageContents);
 			} catch (error) {
 				return this.handleErr(error);
-			}
+			}	
 		},
 		
 		/**
@@ -213,9 +220,29 @@ module.exports = {
 		 * @param {Response} res
 	 	*/
 		async login(req,res) {
-			var name = req.query.name;
-			var pwd = req.query.pwd;
-			
+			let username = req.query.username;
+			let pwd = req.query.pwd;
+			let errorMsg = "";
+			try{
+				const data = await this.broker.call("users.find",{query:{name:username}});
+				if (!data){
+					errorMsg = "Username doesn't exist.";
+				}else if(data.password!=pwd){
+					errorMsg = "Password is incorrect.";
+				}
+				if(data.password == pwd){
+					this.settings.ifLogin = true;
+					return res.render("userHome");
+				}
+				let pageContents = {
+					msg : errorMsg,
+					ifLogin: this.settings.ifLogin
+				};
+				return res.render("loginPage", pageContents);
+			} catch (error) {
+				return this.handleErr(error);
+			}	
+				
 		},
 
 		async appendAdditionalData(data) {
