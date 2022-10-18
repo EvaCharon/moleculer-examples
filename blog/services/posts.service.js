@@ -68,7 +68,7 @@ module.exports = {
 					let item = PostsData[index];
 					index += 1;
 					return {
-						title: item.title+authors1.toString(),
+						title: item.title+Object.keys(authors1),
 						content: item.content,
 						// author: fake.random.arrayElement(authors)._id,
 						author: authors[index],

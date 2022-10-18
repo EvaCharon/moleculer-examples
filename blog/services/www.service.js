@@ -214,19 +214,19 @@ module.exports = {
 			let pwd = req.query.pwd;
 			let errorMsg = "";
 			try{
-				let data = await this.broker.call("users.find",{query:{username:name}});
+				const data = await this.broker.call("users.find",{query:{username:name}});
 				
 				if (data.length == 0){
 					errorMsg = "Username doesn't exist.";
 				}
-				else if(data[0].password!=pwd){
-					errorMsg = "Password is incorrect."+data[0].password+Object.keys(data[0]);
+				else if(data.password!=pwd){
+					errorMsg = "Password is incorrect."+data.password+Object.keys(data);
 				}
 				let pageContents = {
 					msg : errorMsg,
 					ifLogin: this.settings.ifLogin
 				};
-				if(data[0].password == pwd){
+				if(data.password == pwd){
 					this.settings.ifLogin = true;
 					pageContents = {
 						user: u,
@@ -268,7 +268,7 @@ module.exports = {
 					avatar: fake.internet.avatar(),
 					author: false
 				};
-				await this.broker.call("posts.insert",userInfo);
+				await this.broker.call("users.insert",userInfo);
 				this.settings.ifLogin = true;
 				let	pageContents = {
 					user: userInfo,
