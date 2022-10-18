@@ -50,7 +50,7 @@ module.exports = {
 				this.logger.info("Seed Posts collection...");
 				await this.waitForServices(["users"]);
 				let users = await this.broker.call("users.find");
-				if (authors.length == 0) {
+				if (users.length == 0) {
 					this.logger.info("Waiting for `users` seed...");
 					setTimeout(this.seedDB, 1000);
 					return;
