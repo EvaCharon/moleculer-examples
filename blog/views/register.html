@@ -16,7 +16,7 @@
                     <nav class="links">
                         <ul>
                             <li><a href="/category/Distributed Architecture">Distributed Architecture</a></li>
-                            <li><a href="/category/Deep Learning">Deep learning</a></li>
+                            <li><a href="/category/Deep Learning">Deep Learning</a></li>
                             <li><a href="/category/Database">Database</a></li>
                             <li><a href="/category/Others">Others</a></li>
                         </ul>
@@ -53,9 +53,11 @@
                                             <div class="info d-flex align-items-center">
                                                 <div class="content">
                                                     <div class="logo">
-                                                        <h1><strong>Welcome!</strong></h1>
+                                                        <h1><strong>Register</strong></h1>
                                                     </div>
-                                                    <p>Login to start learning!</p>
+                                                    <p>
+                                                        Fill in the following list.
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -65,19 +67,37 @@
                             <div class="col-lg-6 bg-white">
                                 <div class="form d-flex align-items-center">
                                     <div class="content">
-                                        <form id="login-list" action="#" th:action="@{/login_message}" th:object="${buyer}" method="post" class="form-validate" novalidate="novalidate">
-                                            <div class="form-group">
-                                                <label for="login-username" class="label-material active">userID</label>
-                                                <input id="login-username" class="input-material" type="text" name="user-name" placeholder="" th:field="*{name}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="login-password" class="label-material active">Passward</label>
-                                                <input id="login-password" type="password" name="password-raw" placeholder="" th:field="*{password}" class="input-material"/>
-                                                <a href="#" class="forgot-pass" style="margin-top:30px"></a><br/><small>No account? </small><a href="/registerPage" class="signup"><u>sign up</u></b></a>
+                                        <form id="register-list" action="/register" method="get" class="form-validate" novalidate="novalidate">
+                                                <div class="form-group">
+                                                    <label for="register-username" class="label-material active">User name</label>
+                                                    <input id="register-username" class="input-material" type="text" name="username" placeholder="Please input username." />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="register-password" class="label-material active">Password</label>
+                                                    <input id="register-password" type="password" name="pwd" placeholder="Please input password." class="input-material"/>
+                                                </div>
+                                                <div class="form-group">
+                                                        <label for="register-password" class="label-material active"> Repeat Password</label>
+                                                        <input id="register-password" type="password" name="repeatpwd" placeholder="Please repeat password." class="input-material"/>
+                                                </div>
+                                                <div class="form-group">
+                                                        <label for="register-fullname" class="label-material active">Full Name</label>
+                                                        <input id="register-fullname" type="text" name="fullname" placeholder="Please input full name." class="input-material"/>
+                                                </div>
+                                                <div class="form-group">
+                                                        <label for="register-email" class="label-material active">Email</label>
+                                                        <input id="register-email" type="text" name="email" placeholder="Please input email." class="input-material"/>
+                                                </div>
+
+
                                                 <ul class="actions vertical">
-                                                    <li><a class="button big fit" href="/login">Log In</a></li>
+                                                        <li>
+                                                            <a>
+                                                                <input class="button big fit" type="submit" value="Register">
+                                                            </a>
+                                                        </li>
                                                 </ul>
-                                            </form>
+                                        </form>
                                        
                                         
                                         <div class="alert alert-warning alert-dismissible" style="background-color:#fff;" th:if="${msg!=null}">
@@ -116,7 +136,7 @@
                             <h3>Distributed Architecture</h3>
                         </a></li>
                     <li><a href="/category/Deep Learning">
-                            <h3>Deep learning</h3>
+                            <h3>Deep Learning</h3>
                         </a></li>
                     <li><a href="/category/Database">
                             <h3>Database</h3>
