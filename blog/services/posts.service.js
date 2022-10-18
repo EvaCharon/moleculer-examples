@@ -49,6 +49,7 @@ module.exports = {
 			try {
 				this.logger.info("Seed Posts collection...");
 				await this.waitForServices(["users"]);
+				let users = await this.broker.call("users.find");
 				if (authors.length == 0) {
 					this.logger.info("Waiting for `users` seed...");
 					setTimeout(this.seedDB, 1000);
@@ -56,8 +57,7 @@ module.exports = {
 				}
 				let authors = new Array();
 				for(let i=0;i<PostsData.length;i++){
-					let user = await this.broker.call("users.find",{query:{username:PostsData[i].author}});
-					authors[i] = user._id;
+					authors[i] = users.users.filter(u => PostsData[i].author)[0]._id;
 				}
 				// let user = await this.broker.call("users.find",{query:{username:item.author}});
 				let index = 0;
@@ -68,8 +68,8 @@ module.exports = {
 					return {
 						title: item.title+user._id,
 						content: item.content,
-						// author: fake.random.arrayElement(authors)._id,
-						author: authors[i],
+						author: fake.random.arrayElement(authors)._id,
+						// author: authors[i],
 						category: item.category,
 						coverPhoto: item.coverPhoto,
 						createdAt: fakePost.created
