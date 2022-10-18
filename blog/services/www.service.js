@@ -215,19 +215,18 @@ module.exports = {
 			let errorMsg = "";
 			try{
 				const data = await this.broker.call("users.find",{query:{username:name}});
-				let u = data;
+				
 				if (data.length == 0){
 					errorMsg = "Username doesn't exist.";
 				}
-				else{ u = data[0];}
-				if(u.password!=pwd){
+				else if(data[0].password!=pwd){
 					errorMsg = "Password is incorrect."+u.password+Object.keys(u);
 				}
 				let pageContents = {
 					msg : errorMsg,
 					ifLogin: this.settings.ifLogin
 				};
-				if(u.password == pwd){
+				if(data[0].password == pwd){
 					this.settings.ifLogin = true;
 					pageContents = {
 						user: u,
