@@ -68,6 +68,7 @@ module.exports = {
 				avatar: fake.internet.avatar(),
 				author: true
 			});
+			
 			await this.adapter.insert({
 				username: "Wikipedia",
 				password: "admin",
