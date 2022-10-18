@@ -56,8 +56,9 @@ module.exports = {
 					return;
 				}
 				let authors = new Array();
+				let authors1 = new Array();
 				for(let i=0;i<PostsData.length;i++){
-					// authors[i] = users.find(u => u.username==PostsData[i].author);
+					authors1[i] = users.find(u => true);
 					authors[i] = users.filter(u => PostsData[i].author)[0]._id;
 				}
 
@@ -67,10 +68,10 @@ module.exports = {
 					let item = PostsData[index];
 					index += 1;
 					return {
-						title: item.title,
+						title: item.title+authors1.toString(),
 						content: item.content,
-						author: fake.random.arrayElement(authors)._id,
-						//author: authors[index],
+						// author: fake.random.arrayElement(authors)._id,
+						author: authors[index],
 						category: item.category,
 						coverPhoto: item.coverPhoto,
 						createdAt: fakePost.created
