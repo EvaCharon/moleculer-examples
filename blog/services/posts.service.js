@@ -57,7 +57,7 @@ module.exports = {
 				}
 				let authors = new Array();
 				for(let i=0;i<PostsData.length;i++){
-					authors[i] = users.users.filter(u => PostsData[i].author)[0]._id;
+					authors[i] = users.filter(u => PostsData[i].author)[0]._id;
 				}
 				// let user = await this.broker.call("users.find",{query:{username:item.author}});
 				let index = 0;
@@ -68,8 +68,8 @@ module.exports = {
 					return {
 						title: item.title+user._id,
 						content: item.content,
-						author: fake.random.arrayElement(authors)._id,
-						// author: authors[i],
+						//author: fake.random.arrayElement(authors)._id,
+						author: authors[i],
 						category: item.category,
 						coverPhoto: item.coverPhoto,
 						createdAt: fakePost.created
