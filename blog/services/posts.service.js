@@ -62,13 +62,13 @@ module.exports = {
 					authors[i] = users.filter(u => PostsData[i].author)[0]._id;
 				}
 
-				let index = 0;
+				let index = -1;
 				await this.adapter.insertMany(_.times(PostsData.length, () => {
+					index += 1;
 					let fakePost = fake.entity.post();					
 					let item = PostsData[index];
-					index += 1;
 					return {
-						title: item.title+Object.keys(authors1),
+						title: item.title+Object.keys(authors1[0]),
 						content: item.content,
 						author: authors[index],
 						category: item.category,

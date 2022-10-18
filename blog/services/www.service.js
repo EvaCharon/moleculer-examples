@@ -220,13 +220,13 @@ module.exports = {
 					errorMsg = "Username doesn't exist.";
 				}
 				else if(data[0].password!=pwd){
-					errorMsg = "Password is incorrect."+data[0].password+Object.keys(data[0]);
+					errorMsg = "Password is incorrect."
 				}
 				let pageContents = {
 					msg : errorMsg,
 					ifLogin: this.settings.ifLogin
 				};
-				if(data.password == pwd){
+				if(data[0].password == pwd){
 					this.settings.ifLogin = true;
 					pageContents = {
 						user: data[0],
