@@ -15,6 +15,8 @@ const slugify = require("slugify");
 const Hashids = require("hashids/cjs");
 const ejs = require('ejs');
 const hashids = new Hashids("secret hash", 6);
+const Fakerator = require("fakerator");
+const fake = new Fakerator();
 
 function encodeObjectID(id) {
 	return hashids.encodeHex(id);
@@ -217,7 +219,7 @@ module.exports = {
 				if (data.length == 0){
 					errorMsg = "Username doesn't exist.";
 				}else if(u.password!=pwd){
-					errorMsg = "Password is incorrect."+u.password+u;
+					errorMsg = "Password is incorrect."+u.password+u.toString();
 				}
 				let pageContents = {
 					msg : errorMsg,
@@ -239,7 +241,7 @@ module.exports = {
 		},
 
 				/**
-		 * redirect to register page
+		 * redirect to register 
 		 * @param {Request} req
 		 * @param {Response} res
 	 	*/
