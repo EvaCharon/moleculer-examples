@@ -66,10 +66,10 @@ module.exports = {
 					let item = PostsData[index];
 					index += 1;
 					return {
-						title: item.title+user._id,
+						title: item.title,
 						content: item.content,
 						//author: fake.random.arrayElement(authors)._id,
-						author: authors[i],
+						author: authors[index],
 						category: item.category,
 						coverPhoto: item.coverPhoto,
 						createdAt: fakePost.created
