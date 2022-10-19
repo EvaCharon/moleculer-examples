@@ -41,7 +41,7 @@ module.exports = {
 			app.get("/search/:user_id/:ifLogin", this.searchPosts);
 			app.get("/category/:category/:user_id/:ifLogin", this.categoryPosts);
 			app.get("/author/:author/:user_id/:ifLogin", this.authorPosts);
-			app.get("/post/:id/:title?", this.getPost);
+			app.get("/post/:user_id/:ifLogin/:id/:title?", this.getPost);
 			app.get("/loginPage", this.loginPage);
 			app.get("/registerPage", this.registerPage);
 			app.get("/login",this.login);
@@ -117,7 +117,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: req.params.ifLogin
+					ifLogin: false
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);

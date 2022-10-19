@@ -69,7 +69,7 @@
                     <footer>
                         <ul class="actions">
                             <li><a class="button big"
-                                    href="/post/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>/<%= user._id %>/<%= ifLogin %>">Continue Reading</a></li>
+                                    href="/post/<%= user._id %>/<%= ifLogin %>/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>">Continue Reading</a></li>
                         </ul>
                         <ul class="stats">
                             <li><a href="/category/<%= post.category %>/<%= user._id %>/<%= ifLogin %>"><%= post.category %></a></li>

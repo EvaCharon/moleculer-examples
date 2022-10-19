@@ -12,14 +12,23 @@
 <body class="">
     <div id="app">
         <div id="wrapper">
+            <% 
+            var user = {
+                _id:-1
+            };
+    
+            if(ifLogin){
+                user = currentUser;
+            }
+        %>
             <header id="header">
                 <h1><a href="/">Tech Viewer</a></h1>
                 <nav class="links">
                     <ul>
-                        <li><a href="/category/Distributed Architecture">Distributed Architecture</a></li>
-                        <li><a href="/category/Deep Learning">Deep learning</a></li>
-                        <li><a href="/category/Database">Database</a></li>
-                        <li><a href="/category/Others">Others</a></li>
+                        <li><a href="/category/Distributed Architecture/<%= user._id %>/<%= ifLogin %>">Distributed Architecture</a></li>
+                        <li><a href="/category/Deep Learning/<%= user._id %>/<%= ifLogin %>">Deep learning</a></li>
+                        <li><a href="/category/Database/<%= user._id %>/<%= ifLogin %>">Database</a></li>
+                        <li><a href="/category/Others/<%= user._id %>/<%= ifLogin %>">Others</a></li>
                     </ul>
                 </nav>
                 <nav class="main">
@@ -91,16 +100,16 @@
         <!-- Links-->
         <section>
             <ul class="links">
-                <li><a href="/category/Distributed Architecture">
+                <li><a href="/category/Distributed Architecture/<%= user._id %>/<%= ifLogin %>">
                         <h3>Distributed Architecture</h3>
                     </a></li>
-                <li><a href="/category/Deep Learning">
+                <li><a href="/category/Deep Learning/<%= user._id %>/<%= ifLogin %>">
                         <h3>Deep learning</h3>
                     </a></li>
-                <li><a href="/category/Database">
+                <li><a href="/category/Database/<%= user._id %>/<%= ifLogin %>">
                         <h3>Database</h3>
                     </a></li>
-                <li><a href="/category/Others">
+                <li><a href="/category/Others/<%= user._id %>/<%= ifLogin %>">
                         <h3>Others</h3>
                     </a></li>
             </ul>
