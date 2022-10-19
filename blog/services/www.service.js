@@ -334,10 +334,10 @@ module.exports = {
 				
 
 				if(data[0].password == pwd){
-					const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['user','post']});
+					//const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['user','post']});
 			
 					pageContents = {
-						posts:likes.rows,
+						posts:[],
 						currentUser: [data[0]],
 						ifLogin: true
 					}
