@@ -15,7 +15,7 @@ module.exports = {
 	model: Like,
 
 	settings: {
-		fields: ["user", "post"],
+		fields: ["user", "username", "post"],
 		populates: {
 			"user": {
 				action: "users.get",
@@ -58,6 +58,7 @@ module.exports = {
 					promises.push(this.adapter.insertMany(postIDs.map(postID => {
 						return {
 							user: user._id,
+							username:user.username,
 							post: postID
 						};
 					})));

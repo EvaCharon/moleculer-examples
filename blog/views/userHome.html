@@ -51,15 +51,15 @@
 
 
 
-                    <% for(var i in posts){var like=posts[i]; %>
+                    <% for(var i in posts){var post=posts[i]; %>
                     <article class="post">
                         <header>
                             <div class="title">
-                                <h2><a href="/post/<%= encodeObjectID(like.post._id) %>/<%= slugify(like.post.title) %>"><%= post.title %></a></h2>
+                                <h2><a href="/post/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>"><%= post.title %></a></h2>
                                 <p><%=  truncateContent(post.content) %></p>
                             </div>
                             <div class="meta">
-                                <time class="published"><%= moment(like.post.createdAt).format('LLL') %></time>
+                                <time class="published"><%= moment(post.createdAt).format('LLL') %></time>
                             </div>
                         </header>
                         <footer>
