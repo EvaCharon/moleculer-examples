@@ -58,10 +58,10 @@ module.exports = {
 		async like(req, res) {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
-			let u_id = req.params.user_id;;
-			const currentUser = await this.broker.call("users.find", {query:{username:u_id}})[0];
+			let u_id = req.params.user_id;
 			try {
-				if(decodeObjectID(req.params.user_id)==0){
+				const currentUser = await this.broker.call("users.find", {query:{username:u_id}})[0];
+				if(req.params.user_id == "0"){
 					console.log("Please login first!");
 				}else{
 					await this.broker.call("likes.create",{
@@ -106,7 +106,7 @@ module.exports = {
 					let u_id = req.params.user_id;
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.find", {query:{username:u_id}})[0];
+					const currentUser = await this.broker.call("users.find", {query:{username:"wikipedia"}})[0];
 					pageContents.currentUser = currentUser;
 				}else{
 					pageContents.Login = false;
