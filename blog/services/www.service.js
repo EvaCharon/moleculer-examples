@@ -84,8 +84,8 @@ module.exports = {
 		async createPost(req, res){
 			let item = req.req
 			let u_id = req.params.user_id;
-			const users = await this.broker.call("users.find");
-			u_id = users.find(u => u.username==req.params.user_id)._id;
+			// const users = await this.broker.call("users.find");
+			// u_id = users.find(u => u.username==req.params.user_id)._id;
 			try{
 			const currentUser = await this.broker.call("users.find", {query:{username:req.params.user_id}});
 					//pageContents.currentUser = currentUser;
