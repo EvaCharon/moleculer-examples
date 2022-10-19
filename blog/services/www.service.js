@@ -325,10 +325,29 @@ module.exports = {
 					ifLogin: false
 				};
 				if(data[0].password == pwd){
-					
+				let en = encodeObjectID(data[0]._id);
+				let de = decodeObjectID(en)
+				
+				const data1 = await this.broker.call("users.find",{query:{_id:de}});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					pageContents = {
 						posts:[],
-						currentUser: data[0],
+						currentUser: data1[0],
 						ifLogin: true
 					}
 					return res.render("userHome",pageContents);
@@ -370,7 +389,7 @@ module.exports = {
 				await this.broker.call("users.create",userInfo);
 
 				const currentUser = await this.broker.call("users.find",{query:{username:userInfo.username}})[0];
-				const likes = await this.broker.call("likes.list",{query:{user:currentUser._id}});
+				// const likes = await this.broker.call("likes.list",{query:{user:currentUser._id}});
 				
 				let	pageContents = {
 					posts:[],
