@@ -58,12 +58,14 @@ module.exports = {
 		async like(req, res) {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
+			let u_id = decodeObjectID(req.params.user_id);
+			const currentUser = await this.broker.call("users.find", {query:{username:u_id}})[0];
 			try {
 				if(decodeObjectID(req.params.user_id)==0){
 					console.log("Please login first!");
 				}else{
 					await this.broker.call("likes.create",{
-							user: decodeObjectID(req.params.user_id),
+							user: currentUser._id,
 							post: decodeObjectID(req.params.post_id)
 					});
 
@@ -104,7 +106,7 @@ module.exports = {
 					let u_id = decodeObjectID(req.params.user_id);
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.get", {u_id});
+					const currentUser = await this.broker.call("users.find", {query:{username:u_id}})[0];
 					pageContents.currentUser = currentUser;
 				}else{
 					pageContents.Login = false;
@@ -158,7 +160,7 @@ module.exports = {
 				
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.lists", {query: { _id : u_id }}).rows[0];
+					const currentUser = await this.broker.call("users.find", {query:{username:u_id}})[0];
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -194,7 +196,7 @@ module.exports = {
 					let u_id = decodeObjectID(req.params.user_id);
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.get", {author});
+					const currentUser = await this.broker.call("users.find", {query:{username:u_id}})[0];
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -230,7 +232,7 @@ module.exports = {
 					let u_id = decodeObjectID(req.params.user_id);
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.get", {u_id});
+					const currentUser = await this.broker.call("users.find", {query:{username:u_id}})[0];
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -268,7 +270,7 @@ module.exports = {
 					let u_id = decodeObjectID(req.params.user_id);
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.get", {u_id});
+					const currentUser = await this.broker.call("users.find", {query:{username:u_id}})[0];
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -327,15 +329,13 @@ module.exports = {
 					ifLogin: false
 				};
 
-				let u_id = data[0]._id;
-				const currentUser = await this.broker.call("users.get", {u_id});
-
+				
 
 				if(data[0].password == pwd){
 					pageContents = {
 						posts:[],
-						currentUser: currentUser,
-						ifLogin: encodeObjectID(u_id)
+						currentUser: data[0],
+						ifLogin: true
 					}
 					return res.render("userHome",pageContents);
 				}
