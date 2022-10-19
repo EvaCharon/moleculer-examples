@@ -38,6 +38,7 @@ module.exports = {
 	methods: {
 		initRoutes(app) {
 			app.get("/", this.allPosts);
+			app.get("/hasLogin/:ifLogin/:user_id", this.allPostsAfterLogin);
 			app.get("/search", this.searchPosts);
 			app.get("/category/:category", this.categoryPosts);
 			app.get("/author/:author", this.authorPosts);
@@ -47,9 +48,66 @@ module.exports = {
 			app.get("/login",this.login);
 			app.get("/register",this.register);
 			app.get("/userHome/:id");
+			app.get("/like/:user_id/:post_id",this.like);
 		},
 
-
+		/**
+		 *
+		 * @param {Request} req
+		 * @param {Response} res
+		 */
+		async like(req, res) {
+			const pageSize = this.settings.pageSize;
+			const page = Number(req.query.page || 1);
+			try {
+				if(!req.params.ifLogin){
+					alert("Please login first!");
+					return;
+				}else{
+					const setLike = await this.broker.call("likes.create",{
+							user: req.params.user_id,
+							post: req.params.post_id
+					});
+					const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
+				
+					let pageContents = {
+						posts : data.rows,
+						totalPages: data.totalPages,
+						ifLogin: req.params.ifLogin
+					};
+					pageContents = await this.appendAdditionalData(pageContents);
+					return res.render("index", pageContents);
+				}				
+			} catch (error) {
+				return this.handleErr(error);
+			}
+		},
+		/**
+		 *
+		 * @param {Request} req
+		 * @param {Response} res
+		 */
+		async allPostsAfterLogin(req, res) {
+			const pageSize = this.settings.pageSize;
+			const page = Number(req.query.page || 1);
+			let u_id = req.params.user_id;
+			try {
+				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
+				const currentUser = await this.broker.call("users.get", {u_id});
+				console.log(data.rows);
+				let pageContents = {
+					posts : data.rows,
+					totalPages: data.totalPages,
+					ifLogin: true,
+					currentUser:currentUser
+					
+				};
+				pageContents = await this.appendAdditionalData(pageContents);
+				return res.render("index", pageContents);
+			} catch (error) {
+				return this.handleErr(error);
+			}
+		},
 
 		async allPosts(req, res) {
 			const pageSize = this.settings.pageSize;

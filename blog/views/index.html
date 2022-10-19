@@ -10,6 +10,15 @@
 
 
 <body class="">
+    <% 
+        var user={
+            _id:-1;
+        };
+        if(ifLogin){
+            user = currentUser;
+        }
+    
+    %>
     <div id="app">
         <div id="wrapper">
             <header id="header">
@@ -64,7 +73,7 @@
                         </ul>
                         <ul class="stats">
                             <li><a href="/category/<%= post.category %>"><%= post.category %></a></li>
-                            <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(post._id) %>"><%= post.likes %></a></li>
+                            <li><a class="icon fa-heart" href="/like/<%= currentUser._id %>/<%= encodeObjectID(post._id) %>"><%= post.likes %></a></li>
                             <li><a class="icon fa-comment" href="/post/<%= encodeObjectID(post._id) %>#comments"></a></li>
                         </ul>
                     </footer>
