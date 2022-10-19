@@ -87,7 +87,7 @@ module.exports = {
 			let users = await this.broker.call("users.find");
 			u_id = users.find(u => u.username==req.params.user_id)._id;
 			try{
-			const currentUser = await this.broker.call("users.find", {query:{username:u_id}});
+			const currentUser = await this.broker.call("users.find", {query:{username:req.params.user_id}});
 					//pageContents.currentUser = currentUser;
 			let fakePost = fake.entity.post();			
 			let postInfo = {
@@ -106,7 +106,7 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (req.params.user_id != "0"),
-					currentUser:currentUser._id
+					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -127,7 +127,7 @@ module.exports = {
 			try {
 				let users = await this.broker.call("users.find");
 				u_id = users.find(u => u.username==req.params.user_id)._id;
-				const currentUser = await this.broker.call("users.find", {query:{username:u_id}});
+				const currentUser = await this.broker.call("users.find", {query:{username:req.params.user_id}});
 				if(req.params.user_id == "0"){
 					console.log("Please login first!");
 				}else{
