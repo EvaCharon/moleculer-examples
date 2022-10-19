@@ -338,7 +338,7 @@ module.exports = {
 			
 					pageContents = {
 						posts:likes.rows,
-						currentUser: data,
+						currentUser: [data[0]],
 						ifLogin: true
 					}
 					return res.render("userHome",pageContents);
