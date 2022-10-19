@@ -336,7 +336,7 @@ module.exports = {
 				if(data[0].password == pwd){
 					pageContents = {
 						posts:[],
-						currentUser: data[0],
+						currentUser: data,
 						ifLogin: true
 					}
 					return res.render("userHome",pageContents);
@@ -375,14 +375,12 @@ module.exports = {
 					avatar: fake.internet.avatar(),
 					author: false
 				};
-				const created = await this.broker.call("users.create",userInfo);
-
-				//const currentUser = await this.broker.call("users.find",{query:{username:name}});
-				// const likes = await this.broker.call("likes.list",{query:{user:currentUser._id}});
+				const created = await this.broker.call("users.create",userInfo);				
+				const likes = await this.broker.call("likes.list",{query:{user:created._id},populate:['user','post']});
 				
 				let	pageContents = {
-					posts:[],
-					currentUser: created,
+					posts:likes.rows,
+					currentUser: [created],
 					ifLogin: true
 				}
 				return res.render("userHome",pageContents);

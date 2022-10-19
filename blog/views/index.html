@@ -77,7 +77,7 @@
                         <ul class="stats">
                             <li><a href="/category/<%= post.category %>/<%= user.username %>/<%= ifLogin %>"><%= post.category %></a></li>
                             <% if(ifLogin){ %>
-                            <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(post._id) %>"><%= post.likes %></a></li>
+                            <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(post._id) %>/<%= user.username %>/<%= ifLogin %>"><%= post.likes %></a></li>
                             <li><a class="icon fa-comment" href="/post/<%= encodeObjectID(post._id) %>#comments"></a></li>
                             <% } %>
                         </ul>

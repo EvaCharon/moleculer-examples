@@ -22,7 +22,13 @@ module.exports = {
 				params: {
 					fields: ["_id", "username", "fullName", "avatar"]
 				}
-			}
+			},
+			"post": {
+				action: "post.get",
+				params: {
+					fields: ["_id", "title", "author", "createdAt"]
+				}
+			},
 		}
 	},
 
