@@ -63,7 +63,7 @@
                             </a>
                         </div>
                     </header>
-                    <a class="image featured" href="/post/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>/<%= encodeObjectID(user._id) %>/<%= ifLogin %>">
+                    <a class="image featured" href="/post/<%= encodeObjectID(user._id) %>/<%= ifLogin %>/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>">
                         <img src="/images/covers/<%= post.coverPhoto %>" alt="">
                     </a>
                     <p><%=  truncateContent(post.content) %></p>

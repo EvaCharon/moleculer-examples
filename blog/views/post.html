@@ -51,7 +51,7 @@
                 <article class="post">
                     <header>
                         <div class="title">
-                            <h2><a href="/post/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>"><%= post.title %></a></h2>
+                            <h2><a href="/post/<%= encodeObjectID(user._id) %>/<%= ifLogin %>/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>"><%= post.title %></a></h2>
                             <p></p>
                         </div>
                         <div class="meta">
@@ -61,7 +61,7 @@
                             </a>
                         </div>
                     </header>
-                    <a class="image featured" href="/post/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>">
+                    <a class="image featured" href="/post/<%= encodeObjectID(user._id) %>/<%= ifLogin %>/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>">
                         <img src="/images/covers/<%= post.coverPhoto %>" alt="">
                     </a>
                     <p><%=  post.content %></p>

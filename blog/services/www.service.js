@@ -158,7 +158,7 @@ module.exports = {
 				
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.find", {query: { _id : u_id }})[0];
+					const currentUser = await this.broker.call("users.lists", {query: { _id : u_id }}).rows[0];
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -177,6 +177,7 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			let page = Number(req.query.page || 1);
 			let author = decodeObjectID(req.params.author);
+
 			if (!author || author.length == 0)
 				throw this.handleErr(res)(new MoleculerError("Invalid author ID", 404, "INVALID_AUTHOR_ID", { author: req.params.author }));
 
@@ -367,14 +368,14 @@ module.exports = {
 					avatar: fake.internet.avatar(),
 					author: false
 				};
-				await this.broker.call("users.create",userInfo);
+				const created = await this.broker.call("users.create",userInfo);
 
-				const currentUser = await this.broker.call("users.find",{query:{username:userInfo.username}})[0];
+				//const currentUser = await this.broker.call("users.find",{query:{username:name}});
 				// const likes = await this.broker.call("likes.list",{query:{user:currentUser._id}});
 				
 				let	pageContents = {
 					posts:[],
-					currentUser:  currentUser,
+					currentUser: created,
 					ifLogin: true
 				}
 				return res.render("userHome",pageContents);
