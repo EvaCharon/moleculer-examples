@@ -97,7 +97,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: true,
+					ifLogin: 1,
 					currentUser:currentUser
 					
 				};
@@ -117,7 +117,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: false
+					ifLogin: 0
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -254,7 +254,7 @@ module.exports = {
 		async loginPage(req,res) {
 			let pageContents = {
 				msg : "",
-				ifLogin: false
+				ifLogin: 0
 			};
 			return res.render("login",pageContents);
 		},			
@@ -267,7 +267,7 @@ module.exports = {
 		 async registerPage(req,res) {
 			let pageContents = {
 				msg : "",
-				ifLogin: false
+				ifLogin: 0
 			};
 			return res.render("register",pageContents);
 		},
@@ -292,13 +292,13 @@ module.exports = {
 				}
 				let pageContents = {
 					msg : errorMsg,
-					ifLogin: false
+					ifLogin: 0
 				};
 				if(data[0].password == pwd){
 					
 					pageContents = {
 						currentUser: data[0],
-						ifLogin: true
+						ifLogin: 1
 					}
 					return res.render("userHome",pageContents);
 				}
@@ -324,7 +324,7 @@ module.exports = {
 					errorMsg = "Username exists.";
 					let pageContents = {
 						msg : errorMsg,
-						ifLogin: false
+						ifLogin: 0
 					};
 				return res.render("register", pageContents);
 				}
@@ -339,7 +339,7 @@ module.exports = {
 				await this.broker.call("users.create",userInfo);
 				let	pageContents = {
 					currentUser: userInfo,
-					ifLogin: true
+					ifLogin: 1
 				}
 				return res.render("userHome",pageContents);
 			} catch (error) {
