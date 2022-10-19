@@ -58,6 +58,7 @@ module.exports = {
 		 */
 		 async editPost(req, res){
 			let u_id = req.params.user_id;
+			
 			try{
 				let pageContents = {
 					msg : "",
@@ -83,6 +84,8 @@ module.exports = {
 		async createPost(req, res){
 			let item = req.req
 			let u_id = req.params.user_id;
+			let users = await this.broker.call("users.find");
+			u_id = users.find(u => u.username==req.params.user_id)._id;
 			try{
 			const currentUser = await this.broker.call("users.find", {query:{username:u_id}});
 					//pageContents.currentUser = currentUser;
@@ -90,7 +93,7 @@ module.exports = {
 			let postInfo = {
 				title: item.title,
 				content: item.content,
-				author: currentUser._id,
+				author: u_id,
 				category: item.category,
 				// coverPhoto: item.coverPhoto,
 				coverPhoto: "1.jpg",
@@ -122,13 +125,14 @@ module.exports = {
 			const page = Number(req.query.page || 1);
 			let u_id = req.params.user_id;
 			try {
+				let users = await this.broker.call("users.find");
+				u_id = users.find(u => u.username==req.params.user_id)._id;
 				const currentUser = await this.broker.call("users.find", {query:{username:u_id}});
 				if(req.params.user_id == "0"){
 					console.log("Please login first!");
 				}else{
 					await this.broker.call("likes.create",{
-							user: currentUser[0]._id,
-							username: currentUser[0].username,
+							user: u_id,
 							post: decodeObjectID(req.params.post_id)
 					});
 
