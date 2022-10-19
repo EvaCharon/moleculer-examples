@@ -59,20 +59,20 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
 			try {
-				if(!(decodeObjectID(req.params.ifLogin)!=-1)){
+				if(!(decodeObjectID(req.params.ifLogin)!=0)){
 					alert("Please login first!");
 					return;
 				}else{
 					const setLike = await this.broker.call("likes.create",{
 							user: decodeObjectID(req.params.user_id),
-							post: req.params.post_id
+							post: decodeObjectID(req.params.post_id)
 					});
 					const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
 				
 					let pageContents = {
 						posts : data.rows,
 						totalPages: data.totalPages,
-						ifLogin: (decodeObjectID(req.params.ifLogin)!=-1)
+						ifLogin: (decodeObjectID(req.params.ifLogin)!=0)
 					};
 					pageContents = await this.appendAdditionalData(pageContents);
 					return res.render("index", pageContents);
@@ -143,7 +143,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: (decodeObjectID(req.params.ifLogin)!=-1),
+					ifLogin: (decodeObjectID(req.params.ifLogin)!=0),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -173,7 +173,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: (decodeObjectID(req.params.ifLogin)!=-1),
+					ifLogin: (decodeObjectID(req.params.ifLogin)!=0),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -204,7 +204,7 @@ module.exports = {
 					query : search,
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin :(decodeObjectID(req.params.ifLogin)!=-1),
+					ifLogin :(decodeObjectID(req.params.ifLogin)!=0),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -236,7 +236,7 @@ module.exports = {
 				let pageContents = {
 					post : post,
 					title : post.title,
-					ifLogin :(decodeObjectID(req.params.ifLogin)!=-1),
+					ifLogin :(decodeObjectID(req.params.ifLogin)!=0),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
