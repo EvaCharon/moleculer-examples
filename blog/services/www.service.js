@@ -82,42 +82,70 @@ module.exports = {
 		 * @param {Response} res
 		 */
 		async createPost(req, res){
+			// const pageSize = this.settings.pageSize;
+			// const page = Number(req.query.page || 1);
+			// let u_id = req.params.user_id;
+			// // const users = await this.broker.call("users.find");
+			// // u_id = users.find(u => u.username==req.params.user_id)._id;
+			// try{
+			
+			// let fakePost = fake.entity.post();			
+			// let postInfo = {
+			// 	title: req.req.title,
+			// 	content: req.req.content,
+			// 	author: u_id,
+			// 	category: req.req.category,
+			// 	// coverPhoto: item.coverPhoto,
+			// 	coverPhoto: "1.jpg",
+			// 	createdAt: fakePost.created
+			// };
+			// 	//const created = await this.broker.call("posts.create",postInfo);				
+			// 	const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
+			// 	console.log(data.rows);
+			// 	let pageContents = {
+			// 		posts : data.rows,
+			// 		totalPages: data.totalPages,
+			// 		ifLogin: (req.params.user_id != "0"),
+			// 		currentUser:{}
+			// 	};
+			// 	pageContents = await this.appendAdditionalData(pageContents);
+			// 	if(pageContents.ifLogin){
+			// 		if (!u_id || u_id.length == 0)
+			// 			throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
+			// 		const currentUser = await this.broker.call("users.find", {query:{username:u_id}});
+			// 		pageContents.currentUser = currentUser;
+			// 	}
+			// 	return res.render("index", pageContents);
+			
+			// }catch(error) {
+			// 	return this.handleErr(error);
+			// }
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
-			let u_id = req.params.user_id;
-			// const users = await this.broker.call("users.find");
-			// u_id = users.find(u => u.username==req.params.user_id)._id;
-			try{
 			
-			let fakePost = fake.entity.post();			
-			let postInfo = {
-				title: req.req.title,
-				content: req.req.content,
-				author: u_id,
-				category: req.req.category,
-				// coverPhoto: item.coverPhoto,
-				coverPhoto: "1.jpg",
-				createdAt: fakePost.created
-			};
-				//const created = await this.broker.call("posts.create",postInfo);				
+			try {
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
+				
 				console.log(data.rows);
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (req.params.user_id != "0"),
 					currentUser:{}
+					
 				};
-				pageContents = await this.appendAdditionalData(pageContents);
 				if(pageContents.ifLogin){
+					let u_id = req.params.user_id;
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
 					const currentUser = await this.broker.call("users.find", {query:{username:u_id}});
 					pageContents.currentUser = currentUser;
+				}else{
+					pageContents.Login = false;
 				}
+				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
-			
-			}catch(error) {
+			} catch (error) {
 				return this.handleErr(error);
 			}
 		},
