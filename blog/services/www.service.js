@@ -157,7 +157,7 @@ module.exports = {
 					let u_id = decodeObjectID(req.params.user_id);
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.find", {query: { _id : u_id }});
+					const currentUser = await this.broker.call("users.find", {query: { _id : u_id }})[0];
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -369,7 +369,7 @@ module.exports = {
 				};
 				await this.broker.call("users.create",userInfo);
 
-				const currentUser = await this.broker.call("users.find",{query:{username:userInfo.username}});
+				const currentUser = await this.broker.call("users.find",{query:{username:userInfo.username}})[0];
 				const likes = await this.broker.call("likes.list",{query:{user:currentUser._id}});
 				
 				let	pageContents = {
