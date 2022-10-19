@@ -73,16 +73,11 @@
                                     href="/post/<%= encodeObjectID(user._id) %>/<%= ifLogin %>/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>">Continue Reading</a></li>
                         </ul>
                         <ul class="stats">
-                            <li><a href="/category/<%= post.category %>/<%= encodeObjectID(user._id) %>/<%= ifLogin %>"><%= post.category %></a></li>
-                            <li><a class="icon fa-heart" 
-                                <% if(ifLogin){ %>
-                                href="/like/<%= encodeObjectID(user._id) %>/<%= encodeObjectID(post._id) %>/<%= ifLogin %>"
-                                <% }else{ %>
-                                    href="#"
-                                <% alert("Please login first");} %>>
-                                <%= post.likes %>
-                            </a></li>
                             <li><a class="icon fa-comment" href="/post/<%= encodeObjectID(post._id) %>#comments"></a></li>
+                            <% if(ifLogin){ %>
+                            <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(post._id) %>"><%= post.likes %></a></li>
+                            <li><a class="icon fa-comment" href="/post/<%= encodeObjectID(post._id) %>#comments"></a></li>
+                            <% } %>
                         </ul>
                     </footer>
                 </article><% } %>

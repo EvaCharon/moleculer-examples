@@ -106,6 +106,8 @@ module.exports = {
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
 					const currentUser = await this.broker.call("users.get", {u_id});
 					pageContents.currentUser = currentUser;
+				}else{
+					pageContents.Login = false;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -386,7 +388,7 @@ module.exports = {
 			return data;
 		},
 
-		/**
+		/**cd
 		 * @param {Response} res
 		 */
 		handleErr(res) {
