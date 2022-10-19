@@ -135,8 +135,8 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
 			const category = req.params.category;
-			let u_id = decodeObjectID(req.params.user_id);
-			const currentUser = await this.broker.call("users.get", {u_id});
+			// let u_id = decodeObjectID(req.params.user_id);
+			// const currentUser = await this.broker.call("users.get", {u_id});
 			try {
 				const data = await this.broker.call("posts.list", { query: { category }, page, pageSize, populate: ["author", "likes"] });
 
@@ -144,7 +144,7 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (decodeObjectID(req.params.user_id)!=0),
-					currentUser:currentUser
+					currentUser: {}
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
