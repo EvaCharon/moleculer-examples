@@ -154,7 +154,7 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (u_id!=0),
-					currentUser: {}
+					currentUser: {username:"wos"}
 				};
 				if(pageContents.ifLogin){
 				
