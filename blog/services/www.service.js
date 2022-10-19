@@ -60,23 +60,22 @@ module.exports = {
 			const page = Number(req.query.page || 1);
 			try {
 				if(decodeObjectID(req.params.user_id)==0){
-					alert("Please login first!");
-					return;
+					console.log("Please login first!");
 				}else{
-					const setLike = await this.broker.call("likes.create",{
+					await this.broker.call("likes.create",{
 							user: decodeObjectID(req.params.user_id),
 							post: decodeObjectID(req.params.post_id)
 					});
-					const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
-				
+
+				}
+				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });				
 					let pageContents = {
 						posts : data.rows,
 						totalPages: data.totalPages,
 						ifLogin: (decodeObjectID(req.params.user_id)!=0)
 					};
 					pageContents = await this.appendAdditionalData(pageContents);
-					return res.render("index", pageContents);
-				}				
+					return res.render("index", pageContents);				
 			} catch (error) {
 				return this.handleErr(error);
 			}
@@ -89,10 +88,10 @@ module.exports = {
 		async allPostsAfterLogin(req, res) {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
-			let u_id = decodeObjectID(req.params.user_id);
+			
 			try {
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
-				const currentUser = await this.broker.call("users.get", {u_id});
+				
 				console.log(data.rows);
 				let pageContents = {
 					posts : data.rows,
@@ -156,7 +155,7 @@ module.exports = {
 					let u_id = decodeObjectID(req.params.user_id);
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.list", {query: { u_id }})[0];
+					const currentUser = await this.broker.call("users.find", {query: { _id : u_id }});
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
