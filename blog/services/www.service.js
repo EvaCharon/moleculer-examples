@@ -96,7 +96,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: true,
+					ifLogin: (decodeObjectID(req.params.user_id)!=0),
 					currentUser:{}
 					
 				};
