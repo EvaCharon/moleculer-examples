@@ -156,7 +156,7 @@ module.exports = {
 					let u_id = decodeObjectID(req.params.user_id);
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.list", {query: { u_id }});
+					const currentUser = await this.broker.call("users.list", {query: { u_id }})[0];
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -326,6 +326,7 @@ module.exports = {
 				if(data[0].password == pwd){
 					
 					pageContents = {
+						posts:[],
 						currentUser: data[0],
 						ifLogin: true
 					}
@@ -370,6 +371,7 @@ module.exports = {
 				const currentUser = await this.broker.call("users.find",{query:{username:userInfo.username}});
 
 				let	pageContents = {
+					posts:[],
 					currentUser:  currentUser,
 					ifLogin: true
 				}

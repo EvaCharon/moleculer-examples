@@ -20,7 +20,7 @@
     <div id="app">
         <div id="wrapper">
             <header id="header">
-                <h1><a href="/">Tech Viewer</a></h1>
+                <h1><a href="/hasLogin/<%= encodeObjectID(user._id) %>/<%= ifLogin %>">Tech Viewer</a></h1>
                 <nav class="links">
                     <ul>
                         <li><a href="/category/Distributed Architecture/<%= encodeObjectID(user._id) %>/<%= ifLogin %>">Distributed Architecture</a></li>
@@ -32,7 +32,7 @@
                 <nav class="main">
                     <ul>
                         <li class="search"><a class="fa-search" href="#search">Search</a>
-                            <form id="search" method="get" action="/search"><input type="text" name="query"
+                            <form id="search" method="get" action="/search/<%= encodeObjectID(user._id) %>/<%= ifLogin %>"><input type="text" name="query"
                                     placeholder="Search"></form>
                         </li>
                         <li class="menu"><a class="fa-bars" href="#menu">Menu</a></li>
@@ -51,11 +51,27 @@
 
 
 
-
-                    <section>
-                       Welcome!
-                    </section>
-
+                    <% for(var i in posts){var post=posts[i]; %>
+                    <article class="post">
+                        <header>
+                            <div class="title">
+                                <h2><a href="/post/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>"><%= post.title %></a></h2>
+                                <p></p>
+                            </div>
+                            <div class="meta">
+                                <time class="published"><%= moment(post.createdAt).format('LLL') %></time>
+                                <a class="author" href="/author/<%= encodeObjectID(post.author._id) %>">
+                                    <span class="name"><%= post.author.fullName %></span>
+                                </a>
+                            </div>
+                        </header>
+                        <footer>
+                            <ul class="stats">
+                                <li><a href="/category/<%= post.category %>/<%= encodeObjectID(user._id) %>/<%= ifLogin %>"><%= post.category %></a></li>
+                            </ul>
+                        </footer>
+                    </article>
+                    <% } %>
 
 
                     
@@ -93,5 +109,20 @@
                     </a></li>
             </ul>
         </section><!-- Actions-->
+        <% if(ifLogin){ %>
+            <section>
+            <ul class="actions vertical">
+                <li><a>Welcome! <%= user.fullName %></a></li>
+                <li><a class="button big fit" href="/">Log Out</a></li>
+            </ul>
+            </section>
+            
+        <% }else{ %>
+        <section>
+            <ul class="actions vertical">
+                <li><a class="button big fit" href="/loginPage">Log In</a></li>
+            </ul>
+        </section>
+        <% } %>
     </section>
 </body>

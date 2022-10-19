@@ -21,7 +21,7 @@
     <div id="app">
         <div id="wrapper">
             <header id="header">
-                <h1><a href="/">Tech Viewer</a></h1>
+                <h1><a href="/hasLogin/<%= encodeObjectID(user._id) %>/<%= ifLogin %>">Tech Viewer</a></h1>
                 <nav class="links">
                     <ul>
                         <li><a href="/category/Distributed Architecture/<%= encodeObjectID(user._id) %>/<%= ifLogin %>">Distributed Architecture</a></li>
@@ -43,7 +43,7 @@
             <div id="main">
                 <section id="intro"><a class="logo" href="#"><img src="/images/logo.png" alt=""></a>
                     <header>
-                        <h2><a href="/">Tech Viewer</a></h2>
+                        <h2><a href="/hasLogin/<%= encodeObjectID(user._id) %>/<%= ifLogin %>">Tech Viewer</a></h2>
                         <p>Blog about computer Technology making easier learning</a></p>
                     </header>
                 </section>
