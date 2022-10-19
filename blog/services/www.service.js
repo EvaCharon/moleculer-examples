@@ -99,7 +99,7 @@ module.exports = {
 				coverPhoto: "1.jpg",
 				createdAt: fakePost.created
 			};
-				const created = await this.broker.call("posts.create",postInfo);				
+				//const created = await this.broker.call("posts.create",postInfo);				
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
 				console.log(data.rows);
 				let pageContents = {
