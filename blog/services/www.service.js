@@ -98,9 +98,14 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: true,
-					currentUser:currentUser
+					currentUser:{}
 					
 				};
+				if(pageContents.ifLogin){
+					let u_id = decodeObjectID(req.params.user_id);
+					const currentUser = await this.broker.call("users.get", {u_id});
+					pageContents.currentUser = currentUser;
+				}
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
 			} catch (error) {
@@ -135,8 +140,7 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
 			const category = req.params.category;
-			// let u_id = decodeObjectID(req.params.user_id);
-			// const currentUser = await this.broker.call("users.get", {u_id});
+			
 			try {
 				const data = await this.broker.call("posts.list", { query: { category }, page, pageSize, populate: ["author", "likes"] });
 
@@ -146,6 +150,11 @@ module.exports = {
 					ifLogin: (decodeObjectID(req.params.user_id)!=0),
 					currentUser: {}
 				};
+				if(pageContents.ifLogin){
+					let u_id = decodeObjectID(req.params.user_id);
+					const currentUser = await this.broker.call("users.get", {u_id});
+					pageContents.currentUser = currentUser;
+				}
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
 			} catch (error) {
@@ -162,8 +171,6 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			let page = Number(req.query.page || 1);
 			let author = decodeObjectID(req.params.author);
-			let u_id = decodeObjectID(req.params.user_id);
-			const currentUser = await this.broker.call("users.get", {u_id});
 			if (!author || author.length == 0)
 				throw this.handleErr(res)(new MoleculerError("Invalid author ID", 404, "INVALID_AUTHOR_ID", { author: req.params.author }));
 
@@ -174,8 +181,13 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (decodeObjectID(req.params.user_id)!=0),
-					currentUser:currentUser
+					currentUser:{}
 				};
+				if(pageContents.ifLogin){
+					let u_id = decodeObjectID(req.params.user_id);
+					const currentUser = await this.broker.call("users.get", {u_id});
+					pageContents.currentUser = currentUser;
+				}
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
 			} catch (error) {
@@ -192,8 +204,6 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			let page = Number(req.query.page || 1);
 			let search = req.query.query;
-			let u_id = decodeObjectID(req.params.user_id);
-			const currentUser = await this.broker.call("users.get", {u_id});
 			if (!search)
 				return res.redirect("/");
 
@@ -205,8 +215,13 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin :(decodeObjectID(req.params.user_id)!=0),
-					currentUser:currentUser
+					currentUser:{}
 				};
+				if(pageContents.ifLogin){
+					let u_id = decodeObjectID(req.params.user_id);
+					const currentUser = await this.broker.call("users.get", {u_id});
+					pageContents.currentUser = currentUser;
+				}
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
 			} catch (error) {
@@ -221,8 +236,7 @@ module.exports = {
 		 */
 		async getPost(req, res) {
 			let id = decodeObjectID(req.params.id);
-			let u_id = decodeObjectID(req.params.user_id);
-			const currentUser = await this.broker.call("users.get", {u_id});
+			
 			if (!id || id.length == 0)
 				return this.handleErr(res)(this.Promise.reject(new MoleculerError("Invalid POST ID", 404, "INVALID_POST_ID", { id: req.params.id })));
 
@@ -237,8 +251,13 @@ module.exports = {
 					post : post,
 					title : post.title,
 					ifLogin :(decodeObjectID(req.params.user_id)!=0),
-					currentUser:currentUser
+					currentUser:{}
 				};
+				if(pageContents.ifLogin){
+					let u_id = decodeObjectID(req.params.user_id);
+					const currentUser = await this.broker.call("users.get", {u_id});
+					pageContents.currentUser = currentUser;
+				}
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("post", pageContents);
 			} catch (error) {
