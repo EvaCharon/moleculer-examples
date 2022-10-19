@@ -59,12 +59,12 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
 			try {
-				if(!req.params.ifLogin){
+				if(!(decodeObjectID(req.params.ifLogin)!=-1)){
 					alert("Please login first!");
 					return;
 				}else{
 					const setLike = await this.broker.call("likes.create",{
-							user: req.params.user_id,
+							user: decodeObjectID(req.params.user_id),
 							post: req.params.post_id
 					});
 					const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
@@ -72,7 +72,7 @@ module.exports = {
 					let pageContents = {
 						posts : data.rows,
 						totalPages: data.totalPages,
-						ifLogin: req.params.ifLogin
+						ifLogin: (decodeObjectID(req.params.ifLogin)!=-1)
 					};
 					pageContents = await this.appendAdditionalData(pageContents);
 					return res.render("index", pageContents);
@@ -89,7 +89,7 @@ module.exports = {
 		async allPostsAfterLogin(req, res) {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
-			let u_id = req.params.user_id;
+			let u_id = decodeObjectID(req.params.user_id);
 			try {
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
 				const currentUser = await this.broker.call("users.get", {u_id});
@@ -135,7 +135,7 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
 			const category = req.params.category;
-			let u_id = req.params.user_id;
+			let u_id = decodeObjectID(req.params.user_id);
 			const currentUser = await this.broker.call("users.get", {u_id});
 			try {
 				const data = await this.broker.call("posts.list", { query: { category }, page, pageSize, populate: ["author", "likes"] });
@@ -143,7 +143,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: req.params.ifLogin,
+					ifLogin: (decodeObjectID(req.params.ifLogin)!=-1),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -162,7 +162,7 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			let page = Number(req.query.page || 1);
 			let author = decodeObjectID(req.params.author);
-			let u_id = req.params.user_id;
+			let u_id = decodeObjectID(req.params.user_id);
 			const currentUser = await this.broker.call("users.get", {u_id});
 			if (!author || author.length == 0)
 				throw this.handleErr(res)(new MoleculerError("Invalid author ID", 404, "INVALID_AUTHOR_ID", { author: req.params.author }));
@@ -173,7 +173,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: req.params.ifLogin,
+					ifLogin: (decodeObjectID(req.params.ifLogin)!=-1),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -192,7 +192,7 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			let page = Number(req.query.page || 1);
 			let search = req.query.query;
-			let u_id = req.params.user_id;
+			let u_id = decodeObjectID(req.params.user_id);
 			const currentUser = await this.broker.call("users.get", {u_id});
 			if (!search)
 				return res.redirect("/");
@@ -204,7 +204,7 @@ module.exports = {
 					query : search,
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin :req.params.ifLogin,
+					ifLogin :(decodeObjectID(req.params.ifLogin)!=-1),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -221,7 +221,7 @@ module.exports = {
 		 */
 		async getPost(req, res) {
 			let id = decodeObjectID(req.params.id);
-			let u_id = req.params.user_id;
+			let u_id = decodeObjectID(req.params.user_id);
 			const currentUser = await this.broker.call("users.get", {u_id});
 			if (!id || id.length == 0)
 				return this.handleErr(res)(this.Promise.reject(new MoleculerError("Invalid POST ID", 404, "INVALID_POST_ID", { id: req.params.id })));
@@ -236,7 +236,7 @@ module.exports = {
 				let pageContents = {
 					post : post,
 					title : post.title,
-					ifLogin :req.params.ifLogin,
+					ifLogin :(decodeObjectID(req.params.ifLogin)!=-1),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
