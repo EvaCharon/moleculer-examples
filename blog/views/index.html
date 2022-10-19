@@ -78,7 +78,7 @@
                                 href="/like/<%= encodeObjectID(user._id) %>/<%= encodeObjectID(post._id) %>/<%= ifLogin %>"
                                 <% }else{ %>
                                     href="#"
-                                <% alreat("Please login first");} %>>
+                                <% alert("Please login first");} %>>
                                 <%= post.likes %>
                             </a></li>
                             <li><a class="icon fa-comment" href="/post/<%= encodeObjectID(post._id) %>#comments"></a></li>

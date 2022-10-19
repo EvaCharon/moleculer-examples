@@ -368,7 +368,8 @@ module.exports = {
 				await this.broker.call("users.create",userInfo);
 
 				const currentUser = await this.broker.call("users.find",{query:{username:userInfo.username}});
-
+				const likes = await this.broker.call("likes.list",{query:{user:currentUser._id}});
+				
 				let	pageContents = {
 					posts:[],
 					currentUser:  currentUser,
