@@ -82,6 +82,8 @@ module.exports = {
 		 * @param {Response} res
 		 */
 		async createPost(req, res){
+			const pageSize = this.settings.pageSize;
+			const page = Number(req.query.page || 1);
 			let u_id = req.params.user_id;
 			// const users = await this.broker.call("users.find");
 			// u_id = users.find(u => u.username==req.params.user_id)._id;
