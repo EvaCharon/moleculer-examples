@@ -160,8 +160,11 @@ module.exports = {
 				
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.find")[0];
-					pageContents.currentUser = currentUser;
+					const currentUser = await this.broker.call("users.find");
+					if(currentUser.length==0){
+						pageContents.currentUser = {username:"sb"};
+					}
+					//pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
