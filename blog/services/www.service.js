@@ -65,7 +65,7 @@ module.exports = {
 					console.log("Please login first!");
 				}else{
 					await this.broker.call("likes.create",{
-							user: currentUser[0]._id,
+							user: currentUser.rows[0]._id,
 							post: decodeObjectID(req.params.post_id)
 					});
 
@@ -334,8 +334,10 @@ module.exports = {
 				
 
 				if(data[0].password == pwd){
+					const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['user','post']});
+			
 					pageContents = {
-						posts:[],
+						posts:likes.rows,
 						currentUser: data,
 						ifLogin: true
 					}
