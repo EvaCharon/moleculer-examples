@@ -32,23 +32,22 @@ module.exports = {
 	settings: {
 		port: process.env.PORT || 3000,
 		pageSize: 5,
-		ifLogin: false
 	},
 
 	methods: {
 		initRoutes(app) {
 			app.get("/", this.allPosts);
-			app.get("/hasLogin/:ifLogin/:user_id", this.allPostsAfterLogin);
-			app.get("/search", this.searchPosts);
-			app.get("/category/:category", this.categoryPosts);
-			app.get("/author/:author", this.authorPosts);
+			app.get("/hasLogin/:user_id/:ifLogin", this.allPostsAfterLogin);
+			app.get("/search/:user_id/:ifLogin", this.searchPosts);
+			app.get("/category/:category/:user_id/:ifLogin", this.categoryPosts);
+			app.get("/author/:author/:user_id/:ifLogin", this.authorPosts);
 			app.get("/post/:id/:title?", this.getPost);
 			app.get("/loginPage", this.loginPage);
 			app.get("/registerPage", this.registerPage);
 			app.get("/login",this.login);
 			app.get("/register",this.register);
-			app.get("/userHome/:id");
-			app.get("/like/:user_id/:post_id",this.like);
+			app.get("/userHome/:user_id/:ifLogin");
+			app.get("/like/:user_id/:post_id/:ifLogin",this.like);
 		},
 
 		/**
@@ -118,7 +117,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: this.settings.ifLogin
+					ifLogin: req.params.ifLogin
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -136,14 +135,16 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
 			const category = req.params.category;
-
+			let u_id = req.params.user_id;
+			const currentUser = await this.broker.call("users.get", {u_id});
 			try {
 				const data = await this.broker.call("posts.list", { query: { category }, page, pageSize, populate: ["author", "likes"] });
 
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: this.settings.ifLogin
+					ifLogin: req.params.ifLogin,
+					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -161,6 +162,8 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			let page = Number(req.query.page || 1);
 			let author = decodeObjectID(req.params.author);
+			let u_id = req.params.user_id;
+			const currentUser = await this.broker.call("users.get", {u_id});
 			if (!author || author.length == 0)
 				throw this.handleErr(res)(new MoleculerError("Invalid author ID", 404, "INVALID_AUTHOR_ID", { author: req.params.author }));
 
@@ -170,7 +173,8 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: this.settings.ifLogin
+					ifLogin: req.params.ifLogin,
+					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -188,6 +192,8 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			let page = Number(req.query.page || 1);
 			let search = req.query.query;
+			let u_id = req.params.user_id;
+			const currentUser = await this.broker.call("users.get", {u_id});
 			if (!search)
 				return res.redirect("/");
 
@@ -198,7 +204,8 @@ module.exports = {
 					query : search,
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin :this.settings.ifLogin
+					ifLogin :req.params.ifLogin,
+					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -214,6 +221,8 @@ module.exports = {
 		 */
 		async getPost(req, res) {
 			let id = decodeObjectID(req.params.id);
+			let u_id = req.params.user_id;
+			const currentUser = await this.broker.call("users.get", {u_id});
 			if (!id || id.length == 0)
 				return this.handleErr(res)(this.Promise.reject(new MoleculerError("Invalid POST ID", 404, "INVALID_POST_ID", { id: req.params.id })));
 
@@ -227,7 +236,8 @@ module.exports = {
 				let pageContents = {
 					post : post,
 					title : post.title,
-					ifLogin :this.settings.ifLogin
+					ifLogin :req.params.ifLogin,
+					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("post", pageContents);
@@ -244,7 +254,7 @@ module.exports = {
 		async loginPage(req,res) {
 			let pageContents = {
 				msg : "",
-				ifLogin: this.settings.ifLogin
+				ifLogin: false
 			};
 			return res.render("login",pageContents);
 		},			
@@ -257,7 +267,7 @@ module.exports = {
 		 async registerPage(req,res) {
 			let pageContents = {
 				msg : "",
-				ifLogin: this.settings.ifLogin
+				ifLogin: false
 			};
 			return res.render("register",pageContents);
 		},
@@ -282,13 +292,13 @@ module.exports = {
 				}
 				let pageContents = {
 					msg : errorMsg,
-					ifLogin: this.settings.ifLogin
+					ifLogin: false
 				};
 				if(data[0].password == pwd){
-					this.settings.ifLogin = true;
+					
 					pageContents = {
-						user: data[0],
-						ifLogin: this.settings.ifLogin
+						currentUser: data[0],
+						ifLogin: true
 					}
 					return res.render("userHome",pageContents);
 				}
@@ -314,7 +324,7 @@ module.exports = {
 					errorMsg = "Username exists.";
 					let pageContents = {
 						msg : errorMsg,
-						ifLogin: this.settings.ifLogin
+						ifLogin: false
 					};
 				return res.render("register", pageContents);
 				}
@@ -327,10 +337,9 @@ module.exports = {
 					author: false
 				};
 				await this.broker.call("users.create",userInfo);
-				this.settings.ifLogin = true;
 				let	pageContents = {
-					user: userInfo,
-					ifLogin: this.settings.ifLogin
+					currentUser: userInfo,
+					ifLogin: true
 				}
 				return res.render("userHome",pageContents);
 			} catch (error) {
