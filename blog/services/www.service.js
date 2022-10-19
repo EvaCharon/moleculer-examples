@@ -59,7 +59,7 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
 			try {
-				if(!(decodeObjectID(req.params.ifLogin)!=0)){
+				if(!(decodeObjectID(req.params.user_id)!=0)){
 					alert("Please login first!");
 					return;
 				}else{
@@ -72,7 +72,7 @@ module.exports = {
 					let pageContents = {
 						posts : data.rows,
 						totalPages: data.totalPages,
-						ifLogin: (decodeObjectID(req.params.ifLogin)!=0)
+						ifLogin: (decodeObjectID(req.params.user_id)!=0)
 					};
 					pageContents = await this.appendAdditionalData(pageContents);
 					return res.render("index", pageContents);
@@ -97,7 +97,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: 1,
+					ifLogin: true,
 					currentUser:currentUser
 					
 				};
@@ -117,7 +117,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: 0
+					ifLogin: false
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
@@ -143,7 +143,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: (decodeObjectID(req.params.ifLogin)!=0),
+					ifLogin: (decodeObjectID(req.params.user_id)!=0),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -173,7 +173,7 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: (decodeObjectID(req.params.ifLogin)!=0),
+					ifLogin: (decodeObjectID(req.params.user_id)!=0),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -204,7 +204,7 @@ module.exports = {
 					query : search,
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin :(decodeObjectID(req.params.ifLogin)!=0),
+					ifLogin :(decodeObjectID(req.params.user_id)!=0),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -236,7 +236,7 @@ module.exports = {
 				let pageContents = {
 					post : post,
 					title : post.title,
-					ifLogin :(decodeObjectID(req.params.ifLogin)!=0),
+					ifLogin :(decodeObjectID(req.params.user_id)!=0),
 					currentUser:currentUser
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -254,7 +254,7 @@ module.exports = {
 		async loginPage(req,res) {
 			let pageContents = {
 				msg : "",
-				ifLogin: 0
+				ifLogin: false
 			};
 			return res.render("login",pageContents);
 		},			
@@ -267,7 +267,7 @@ module.exports = {
 		 async registerPage(req,res) {
 			let pageContents = {
 				msg : "",
-				ifLogin: 0
+				ifLogin: false
 			};
 			return res.render("register",pageContents);
 		},
@@ -292,13 +292,13 @@ module.exports = {
 				}
 				let pageContents = {
 					msg : errorMsg,
-					ifLogin: 0
+					ifLogin: false
 				};
 				if(data[0].password == pwd){
 					
 					pageContents = {
 						currentUser: data[0],
-						ifLogin: 1
+						ifLogin: true
 					}
 					return res.render("userHome",pageContents);
 				}
@@ -324,7 +324,7 @@ module.exports = {
 					errorMsg = "Username exists.";
 					let pageContents = {
 						msg : errorMsg,
-						ifLogin: 0
+						ifLogin: false
 					};
 				return res.render("register", pageContents);
 				}
@@ -339,7 +339,7 @@ module.exports = {
 				await this.broker.call("users.create",userInfo);
 				let	pageContents = {
 					currentUser: userInfo,
-					ifLogin: 1
+					ifLogin: true
 				}
 				return res.render("userHome",pageContents);
 			} catch (error) {
