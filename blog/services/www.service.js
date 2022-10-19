@@ -62,7 +62,7 @@ module.exports = {
 				let pageContents = {
 					msg : "",
 					ifLogin: true,
-					currentUser:currentUser
+					currentUser:{}
 				};
 				if(pageContents.ifLogin){
 					if (!u_id || u_id.length == 0)
@@ -440,9 +440,9 @@ module.exports = {
 				};
 				const created = await this.broker.call("users.create",userInfo);				
 				const likes = await this.broker.call("likes.list",{query:{user:created._id},populate:['user','post']});
-				
+				const own =  await this.broker.call("posts.list", { query: { author:created._id }, populate: ["author", "likes"] });
 				let	pageContents = {
-					posts:likes.rows,
+					posts:own.rows,
 					currentUser: [created],
 					ifLogin: true
 				}

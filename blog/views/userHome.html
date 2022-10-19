@@ -112,7 +112,7 @@
             <section>
             <ul class="actions vertical">
                 <li><a>Welcome!<i class="icon fa fa-home"></i>
-                    <%= user.fullName %><%= user._id %>
+                    <%= user.fullName %><%= encodeObjectID(user._id) %>
                 </a></li>
                 <li><a class="button big fit" href="/">Log Out</a></li>
             </ul>
