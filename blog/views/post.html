@@ -56,7 +56,7 @@
                         </div>
                         <div class="meta">
                             <time class="published"><%= moment(post.createdAt).format('LLL') %></time>
-                            <a class="author" href="/author/<%= encodeObjectID(post.author._id) %>">
+                            <a class="author" href="/author/<%= encodeObjectID(post.author._id) %>/<%= user.username %>/<%= ifLogin %>">
                                 <span class="name"><%= post.author.fullName %></span>
                             </a>
                         </div>

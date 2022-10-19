@@ -65,7 +65,7 @@ module.exports = {
 					console.log("Please login first!");
 				}else{
 					await this.broker.call("likes.create",{
-							user: currentUser._id,
+							user: currentUser[0]._id,
 							post: decodeObjectID(req.params.post_id)
 					});
 
@@ -74,8 +74,10 @@ module.exports = {
 					let pageContents = {
 						posts : data.rows,
 						totalPages: data.totalPages,
-						ifLogin: (req.params.user_id != "0")
+						ifLogin: (req.params.user_id != "0"),
+						currentUser:currentUser
 					};
+					
 					pageContents = await this.appendAdditionalData(pageContents);
 					return res.render("index", pageContents);				
 			} catch (error) {
@@ -154,17 +156,14 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (u_id!=0),
-					currentUser: {username:"wos"}
+					currentUser: {}
 				};
 				if(pageContents.ifLogin){
 				
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
 					const currentUser = await this.broker.call("users.find", {query:{username:u_id}});
-					if(currentUser.length==0){
-						pageContents.currentUser = {username:"sb"};
-					}
-					//pageContents.currentUser = currentUser;
+					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
