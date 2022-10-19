@@ -20,19 +20,19 @@
     <div id="app">
         <div id="wrapper">
             <header id="header">
-                <h1><a href="/hasLogin/<%= encodeObjectID(user.username) %>/<%= ifLogin %>">Tech Viewer</a></h1>
+                <h1><a href="/hasLogin/<%= user.username %>/<%= ifLogin %>">Tech Viewer</a></h1>
                 <nav class="links">
                     <ul>
-                        <li><a href="/category/Distributed Architecture/<%= encodeObjectID(user.username) %>/<%= ifLogin %>">Distributed Architecture</a></li>
-                        <li><a href="/category/Deep Learning/<%= encodeObjectID(user.username) %>/<%= ifLogin %>">Deep learning</a></li>
-                        <li><a href="/category/Database/<%= encodeObjectID(user.username) %>/<%= ifLogin %>">Database</a></li>
-                        <li><a href="/category/Others/<%= encodeObjectID(user.username) %>/<%= ifLogin %>">Others</a></li>
+                        <li><a href="/category/Distributed Architecture/<%= user.username %>/<%= ifLogin %>">Distributed Architecture</a></li>
+                        <li><a href="/category/Deep Learning/<%= user.username %>/<%= ifLogin %>">Deep learning</a></li>
+                        <li><a href="/category/Database/<%= user.username %>/<%= ifLogin %>">Database</a></li>
+                        <li><a href="/category/Others/<%= user.username %>/<%= ifLogin %>">Others</a></li>
                     </ul>
                 </nav>
                 <nav class="main">
                     <ul>
                         <li class="search"><a class="fa-search" href="#search">Search</a>
-                            <form id="search" method="get" action="/search/<%= encodeObjectID(user.username) %>/<%= ifLogin %>"><input type="text" name="query"
+                            <form id="search" method="get" action="/search/<%= user.username %>/<%= ifLogin %>"><input type="text" name="query"
                                     placeholder="Search"></form>
                         </li>
                         <li class="menu"><a class="fa-bars" href="#menu">Menu</a></li>
@@ -67,7 +67,7 @@
                         </header>
                         <footer>
                             <ul class="stats">
-                                <li><a href="/category/<%= post.category %>/<%= encodeObjectID(user.username) %>/<%= ifLogin %>"><%= post.category %></a></li>
+                                <li><a href="/category/<%= post.category %>/<%= user.username %>/<%= ifLogin %>"><%= post.category %></a></li>
                             </ul>
                         </footer>
                     </article>
@@ -95,16 +95,16 @@
         <!-- Links-->
         <section>
             <ul class="links">
-                <li><a href="/category/Distributed Architecture/<%= encodeObjectID(user.username) %>/<%= ifLogin %>">
+                <li><a href="/category/Distributed Architecture/<%= user.username %>/<%= ifLogin %>">
                         <h3>Distributed Architecture</h3>
                     </a></li>
-                <li><a href="/category/Deep Learning/<%= encodeObjectID(user.username) %>/<%= ifLogin %>">
+                <li><a href="/category/Deep Learning/<%= user.username %>/<%= ifLogin %>">
                         <h3>Deep learning</h3>
                     </a></li>
-                <li><a href="/category/Database/<%= encodeObjectID(user.username) %>/<%= ifLogin %>">
+                <li><a href="/category/Database/<%= user.username %>/<%= ifLogin %>">
                         <h3>Database</h3>
                     </a></li>
-                <li><a href="/category/Others/<%= encodeObjectID(user.username) %>/<%= ifLogin %>">
+                <li><a href="/category/Others/<%= user.username %>/<%= ifLogin %>">
                         <h3>Others</h3>
                     </a></li>
             </ul>
