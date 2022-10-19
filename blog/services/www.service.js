@@ -199,7 +199,7 @@ module.exports = {
 					let u_id = req.params.user_id;
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.find")[0];
+					const currentUser = await this.broker.call("users.find");
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
