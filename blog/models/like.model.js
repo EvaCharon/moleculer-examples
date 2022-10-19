@@ -9,11 +9,7 @@ let LikeSchema = new Schema({
 		ref: "User",
 		required: "Please fill in a user ID",
 	},
-	username: {
-		type: string,
-		ref: "Username",
-		required: "Please fill in a user name",
-	},
+	
 	post: {
 		type: Schema.Types.ObjectId,
 		ref: "Post",
