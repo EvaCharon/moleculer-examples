@@ -48,31 +48,38 @@
                 </section>
                 <section>
 
-
-
-
-                    <% for(var i in posts){var like=posts[i]; %>
                     <article class="post">
+                        <form  id="edit-post" action="/createPost/<%= user.username %>/<%= ifLogin %>" method="get">
                         <header>
                             <div class="title">
-                                <h2><a href="/post/<%= encodeObjectID(like.post._id) %>/<%= slugify(like.post.title) %>"><%= post.title %></a></h2>
-                                <p><%=  truncateContent(post.content) %></p>
-                            </div>
-                            <div class="meta">
-                                <time class="published"><%= moment(like.post.createdAt).format('LLL') %></time>
+                                <label for="post-title"
+                                    class="label-material active">Title</label>
+                                <input type="text"  id="post-title" name="title"
+                                    class="label-material active"/>
+                                
                             </div>
                         </header>
+                             <label for="post-content"
+                                    class="label-material active">Content</label>
+                                                                                        
+                            <textarea  id="post-content" name="content" rows="10"></textarea>
+                        
                         <footer>
                             <ul class="stats">
-                                <li><a href="/category/<%= post.category %>/<%= user.username %>/<%= ifLogin %>"><%= post.category %></a></li>
+                                <li>
+                                    <label for="post-category"
+                                        class="label-material active">Category</label>
+                                    <select name="category" id="post-category">
+                                         <option value="Distributed Architecture">Distributed Architecture</option>
+                                         <option value="Deep Learning">Deep Learning</option>
+                                         <option value="Database">Database</option>
+                                         <option value="Others">Others</option>
+                                    </select>
+                                </li>
                             </ul>
                         </footer>
+                        </form>
                     </article>
-                    <% } %>
-                    
-                    <ul class="actions vertical">
-                        <li><a class="button big fit" href="/edit/<%= user.username %>/<%= ifLogin%>">Add Your Post</a></li>
-                    </ul>
                     
                 </section>
             </div>
@@ -112,7 +119,7 @@
             <section>
             <ul class="actions vertical">
                 <li><a>Welcome!<i class="icon fa fa-home"></i>
-                    <%= user.fullName %><%= user._id %>
+                    <%= user.fullName %>
                 </a></li>
                 <li><a class="button big fit" href="/">Log Out</a></li>
             </ul>

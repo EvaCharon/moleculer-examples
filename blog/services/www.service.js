@@ -48,8 +48,70 @@ module.exports = {
 			app.get("/register",this.register);
 			app.get("/userHome/:user_id/:ifLogin");
 			app.get("/like/:user_id/:post_id/:ifLogin",this.like);
+			app.get("/edit/:user_id/:ifLogin",this.editPost);
+			app.get("/createPost/:user_id/:ifLogin",this.createPost)
 		},
-
+		/**
+		 *
+		 * @param {Request} req
+		 * @param {Response} res
+		 */
+		 async editPost(req, res){
+			let u_id = req.params.user_id;
+			try{
+				let pageContents = {
+					msg : "",
+					ifLogin: true,
+					currentUser:currentUser
+				};
+				if(pageContents.ifLogin){
+					if (!u_id || u_id.length == 0)
+						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
+					const currentUser = await this.broker.call("users.find", {query:{username:u_id}});
+					pageContents.currentUser = currentUser;
+				}
+				return res.render("edit",pageContents);
+			}catch (error) {
+				return this.handleErr(error);
+			}
+		 },
+		 /**
+		 *
+		 * @param {Request} req
+		 * @param {Response} res
+		 */
+		async createPost(req, res){
+			let item = req.req
+			let u_id = req.params.user_id;
+			try{
+			const currentUser = await this.broker.call("users.find", {query:{username:u_id}});
+					//pageContents.currentUser = currentUser;
+			let fakePost = fake.entity.post();			
+			let postInfo = {
+				title: item.title,
+				content: item.content,
+				author: currentUser._id,
+				category: item.category,
+				// coverPhoto: item.coverPhoto,
+				coverPhoto: "1.jpg",
+				createdAt: fakePost.created
+			};
+				const created = await this.broker.call("posts.create",postInfo);				
+				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
+				console.log(data.rows);
+				let pageContents = {
+					posts : data.rows,
+					totalPages: data.totalPages,
+					ifLogin: (req.params.user_id != "0"),
+					currentUser:currentUser._id
+				};
+				pageContents = await this.appendAdditionalData(pageContents);
+				return res.render("index", pageContents);
+			
+			}catch(error) {
+				return this.handleErr(error);
+			}
+		},
 		/**
 		 *
 		 * @param {Request} req
