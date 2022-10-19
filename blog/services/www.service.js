@@ -194,7 +194,7 @@ module.exports = {
 					let u_id = decodeObjectID(req.params.user_id);
 					if (!u_id || u_id.length == 0)
 						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.get", {u_id});
+					const currentUser = await this.broker.call("users.get", {author});
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
@@ -326,11 +326,16 @@ module.exports = {
 					msg : errorMsg,
 					ifLogin: false
 				};
+
+				let u_id = data[0]._id;
+				const currentUser = await this.broker.call("users.get", {u_id});
+
+
 				if(data[0].password == pwd){
 					pageContents = {
 						posts:[],
-						currentUser: data[0],
-						ifLogin: true
+						currentUser: currentUser,
+						ifLogin: encodeObjectID(u_id)
 					}
 					return res.render("userHome",pageContents);
 				}
