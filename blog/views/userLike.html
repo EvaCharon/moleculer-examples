@@ -42,7 +42,7 @@
             <div id="main">
                 <section id="intro"><a class="logo" href="#"><img src="/images/logo.png" alt=""></a>
                     <header>
-                        <h2><a href="#">My Post</a></h2>
+                        <h2><a href="#">My Likes</a></h2>
                         <p>Blog about computer Technology making easier learning</a></p>
                     </header>
                 </section>
@@ -53,20 +53,20 @@
 
 
 
-                    <% for(var i in posts){var post=posts[i]; %>
+                    <% for(var i in posts){var like=posts[i]; %>
                     <article class="post">
                         <header>
                             <div class="title">
-                                <h2><a href="<%= user.username %>/<%= ifLogin %>/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>"><%= post.title %></a></h2>
-                                <p><%=  truncateContent(post.content) %></p>
+                                <h2><a href="<%= user.username %>/<%= ifLogin %>/<%= encodeObjectID(like.post._id) %>/<%= slugify(like.post.title) %>"><%= like.post.title %></a></h2>
+                                <p><%=  truncateContent(like.post.content) %></p>
                             </div>
                             <div class="meta">
-                                <time class="published"><%= moment(post.createdAt).format('LLL') %></time>
+                                <time class="published"><%= moment(like.post.createdAt).format('LLL') %></time>
                             </div>
                         </header>
                         <footer>
                             <ul class="stats">
-                                <li><a href="/category/<%= post.category %>/<%= user.username %>/<%= ifLogin %>"><%= post.category %></a></li>
+                                <li><a href="/category/<%= like.post.category %>/<%= user.username %>/<%= ifLogin %>"><%= like.post.category %></a></li>
                             </ul>
                         </footer>
                     </article>
@@ -111,7 +111,7 @@
         <% if(ifLogin){ %>
             <section>
             <ul class="actions vertical">
-                <li><a href="/home/<%= user.username %>/<%= ifLogin %>">Welcome!<i class="icon fa fa-home"></i>
+                <li><a href="/home/<%= user.username %>/<%= ifLogin %>">Welcome!<br /><i class="icon fa fa-home"></i>
                     <%= user.fullName %>
                 </a></li>
                 <li><a href="/mylike/<%= user.username %>/<%= ifLogin %>">

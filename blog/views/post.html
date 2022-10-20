@@ -117,6 +117,10 @@
                 <li><a href="/home/<%= user.username %>/<%= ifLogin %>">Welcome!<i class="icon fa fa-home"></i>
                     <%= user.fullName %>
                 </a></li>
+                <li><a href="/mylike/<%= user.username %>/<%= ifLogin %>">
+                    <i class="icon fa fa-heart"></i>
+                    Like List
+                </a></li>
                 <li><a class="button big fit" href="/">Log Out</a></li>
             </ul>
             </section>

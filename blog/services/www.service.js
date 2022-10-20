@@ -51,7 +51,29 @@ module.exports = {
 			app.get("/edit/:user_id/:ifLogin",this.editPost);
 			app.get("/createPost/:user_id/:ifLogin",this.createPost)
 			app.get("/home/:user_id/:ifLogin",this.backHome)
+			app.get("/mylike/:user_id/:ifLogin",this.myLike)
 		},
+
+		/**
+		 *
+		 * @param {Request} req
+		 * @param {Response} res
+		 */
+		 async myLike(req, res){
+			let name = req.params.user_id;
+			const data = await this.broker.call("users.find",{query:{username:name}});
+			
+
+			const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['post']});
+			
+			//const own =  await this.broker.call("posts.list", { query: { author:data[0]._id }, populate: ["author", "likes"] });
+			let pageContents = {
+				posts:likes.rows,
+				currentUser: [data[0]],
+				ifLogin: true
+			}
+			return res.render("userLike",pageContents);	
+		 },
 		/**
 		 *
 		 * @param {Request} req
@@ -130,16 +152,15 @@ module.exports = {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
 			let name = req.params.user_id;
+			let p_id = decodeObjectID(req.params.post_id);
 			try {
 				const users = await this.broker.call("users.find");
 				let user = users.find(u => u.username==name);
-	
-				if(req.params.user_id == "0"){
-					console.log("Please login first!");
-				}else{
+				const ifLike = await this.broker.call("likes.find", {query:{user:user._id,post:p_id}});
+				if(ifLike.length==0){
 					await this.broker.call("likes.create",{
 							user: user._id,
-							post: decodeObjectID(req.params.post_id)
+							post: p_id
 					});
 
 				}
