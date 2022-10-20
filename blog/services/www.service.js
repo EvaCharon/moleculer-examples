@@ -205,7 +205,8 @@ module.exports = {
 				let pageContents = {
 					posts : data.rows,
 					totalPages: data.totalPages,
-					ifLogin: false
+					ifLogin: false,
+					page:page
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
