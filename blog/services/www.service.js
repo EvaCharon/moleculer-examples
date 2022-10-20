@@ -109,10 +109,7 @@ module.exports = {
 					currentUser:{},
 					page:page
 				};
-				pageContents = await this.appendAdditionalData(pageContents);
 				if(pageContents.ifLogin){
-					if (!u_id || u_id.length == 0)
-						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
 					const currentUser = await this.broker.call("users.find", {query:{username:name}});
 					pageContents.currentUser = currentUser;
 				}
@@ -154,8 +151,6 @@ module.exports = {
 						page: page
 					};
 					if(pageContents.ifLogin){
-						if (!u_id || u_id.length == 0)
-							throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
 						const currentUser = await this.broker.call("users.find", {query:{username:name}});
 						pageContents.currentUser = currentUser;
 					}

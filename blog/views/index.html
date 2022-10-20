@@ -84,8 +84,12 @@
                 </article><% } %>
                 <!-- Pagination-->
                 <ul class="actions pagination">
+                    <%if(page<1){ %> >
                     <li><a class="disabled button big previous" href="/hasLogin/<%= user.username %>/<%= ifLogin %>?page=<%= page-1 %>">Previous Page</a></li>
-                    <li><a class="disabled button big next" href="/hasLogin/<%= user.username %>/<%= ifLogin %>?page=<%= page+1 %>">Next Page</a></li>
+                    <% }else{ %>
+                    <li><a class="button big previous" href="/hasLogin/<%= user.username %>/<%= ifLogin %>?page=<%= page-1 %>">Previous Page</a></li>
+                    <% } %>
+                    <li><a class="button big next" href="/hasLogin/<%= user.username %>/<%= ifLogin %>?page=<%= page+1 %>">Next Page</a></li>
                 </ul>
             </div>
         </div>
