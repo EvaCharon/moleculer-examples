@@ -35,11 +35,11 @@ module.exports = {
 	actions: {
 
 		like(ctx) {
-			const users = await this.broker.call("users.find");
-			let u_id = users.find(u => u.username==ctx.username)._id;
-			let p_id = ctx.p_id;
-			const like = await this.broker.call("likes.create",{post:p_id,user:u_id});
-			return like;
+			// const users = await this.broker.call("users.find");
+			// let u_id = users.find(u => u.username==ctx.username)._id;
+			// let p_id = ctx.p_id;
+			// const like = await this.broker.call("likes.create",{post:p_id,user:u_id});
+			// return like;
 		
 		},
 
