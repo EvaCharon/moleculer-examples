@@ -26,7 +26,7 @@ module.exports = {
 			"post": {
 				action: "post.get",
 				params: {
-					fields: ["_id", "title", "author","content"],
+					fields: ["_id", "title", "author","content","catagory","createdAt"],
 				}
 			},
 		}
