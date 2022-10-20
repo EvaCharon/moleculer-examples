@@ -55,7 +55,8 @@ module.exports = {
 				ctx.params.similarity = minSimi;
 				ctx.params.similarityID = simiID;				
 			}
-		},
+		}
+	},
 	actions: {
 
 		like(ctx) {
@@ -159,7 +160,7 @@ module.exports = {
 		if (count == 0) {
 			return this.seedDB();
 		}
-	},
+	}
 
 
 	  
