@@ -100,21 +100,20 @@ module.exports = {
 				createdAt: fakePost.created
 			};
 				const created = await this.broker.call("posts.create",postInfo);				
-				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });
-				console.log(data.rows);
+
 				let pageContents = {
-					posts : data.rows,
-					totalPages: data.totalPages,
-					ifLogin: (req.params.user_id != "0"),
-					currentUser:{},
-					page:page
+					post : created,
+					title : created.title,
+					ifLogin :(req.params.user_id != "0"),
+					currentUser:{}
 				};
+			
 				if(pageContents.ifLogin){
 					const currentUser = await this.broker.call("users.find", {query:{username:name}});
 					pageContents.currentUser = currentUser;
 				}
 				pageContents = await this.appendAdditionalData(pageContents);
-				return res.render("index", pageContents);
+				return res.render("post", pageContents);
 			
 			}catch(error) {
 				return this.handleErr(error);
@@ -136,10 +135,10 @@ module.exports = {
 				if(req.params.user_id == "0"){
 					console.log("Please login first!");
 				}else{
-					await this.broker.call("likes.create",{
-							user: user._id,
-							post: decodeObjectID(req.params.post_id)
-					});
+					// await this.broker.call("likes.create",{
+					// 		user: user._id,
+					// 		post: decodeObjectID(req.params.post_id)
+					// });
 
 				}
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });				
