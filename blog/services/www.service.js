@@ -138,8 +138,8 @@ module.exports = {
 					console.log("Please login first!");
 				}else{
 					await this.broker.call("posts.like",{
-							user: name,
-							post: decodeObjectID(req.params.post_id)
+							username: name,
+							p_id: decodeObjectID(req.params.post_id)
 					});
 
 				}
