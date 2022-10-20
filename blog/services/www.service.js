@@ -137,10 +137,10 @@ module.exports = {
 				if(req.params.user_id == "0"){
 					console.log("Please login first!");
 				}else{
-					// await this.broker.call("posts.like",{
-					// 		username: name,
-					// 		p_id: decodeObjectID(req.params.post_id)
-					// });
+					await this.broker.call("posts.like",{
+							user: user._id,
+							post: decodeObjectID(req.params.post_id)
+					});
 
 				}
 				const data = await this.broker.call("posts.list", { page, pageSize, populate: ["author", "likes"] });				
