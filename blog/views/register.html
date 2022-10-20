@@ -183,6 +183,25 @@
                                         </a></li>
                         </ul>
                 </section><!-- Actions-->
+                <% if(ifLogin){ %>
+                    <section>
+                    <ul class="actions vertical">
+                        <li><a href="/backHome/<%= user.username %>/<%= ifLogin %>">Welcome!<i class="icon fa fa-home"></i>
+                            <%= user.fullName %>
+                        </a></li>
+                        <li><a class="button big fit" href="/">Log Out</a></li>
+                    </ul>
+                    </section>
+                    
+                <% }else{ %>
+                <section>
+                    <ul class="actions vertical">
+                        <li><a class="button big fit" href="/loginPage">Log In</a></li>
+                    </ul>
+                </section>
+                <% } %>
+            </section>
+                
 
         </section>
 </body>

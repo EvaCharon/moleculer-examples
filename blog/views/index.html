@@ -84,7 +84,7 @@
                 </article><% } %>
                 <!-- Pagination-->
                 <ul class="actions pagination">
-                    <%if(page<2){ %> >
+                    <%if(page<2){ %>
                     <li><a class="disabled button big previous" href="/hasLogin/<%= user.username %>/<%= ifLogin %>?page=<%= page-1 %>">Previous Page</a></li>
                     <% }else{ %>
                     <li><a class="button big previous" href="/hasLogin/<%= user.username %>/<%= ifLogin %>?page=<%= page-1 %>">Previous Page</a></li>
@@ -127,11 +127,14 @@
         </section><!-- Actions-->
         <% if(ifLogin){ %>
             <section>
-                <ul class="actions vertical">
-                    <li><a>Welcome! <%= user.fullName %></a></li>
-                    <li><a class="button big fit" href="/">Log Out</a></li>
-                </ul>
-                </section>
+            <ul class="actions vertical">
+                <li><a href="/backHome/<%= user.username %>/<%= ifLogin %>">Welcome!<i class="icon fa fa-home"></i>
+                    <%= user.fullName %>
+                </a></li>
+                <li><a class="button big fit" href="/">Log Out</a></li>
+            </ul>
+            </section>
+            
         <% }else{ %>
         <section>
             <ul class="actions vertical">

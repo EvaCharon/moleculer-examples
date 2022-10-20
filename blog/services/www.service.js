@@ -50,6 +50,7 @@ module.exports = {
 			app.get("/like/:post_id/:user_id/:ifLogin",this.like);
 			app.get("/edit/:user_id/:ifLogin",this.editPost);
 			app.get("/createPost/:user_id/:ifLogin",this.createPost)
+			app.get("/home/:user_id/:ifLogin",this.backHome)
 		},
 		/**
 		 *
@@ -112,6 +113,7 @@ module.exports = {
 					const currentUser = await this.broker.call("users.find", {query:{username:name}});
 					pageContents.currentUser = currentUser;
 				}
+				pageContents.post.author = currentUser[0];
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("post", pageContents);
 			
@@ -428,6 +430,25 @@ module.exports = {
 				return this.handleErr(error);
 			}	
 				
+		},
+		/**
+		 * redirect to register page
+		 * @param {Request} req
+		 * @param {Response} res
+	 	*/
+		 async backHome(req,res) {
+			let name = req.params.user_id;
+			const currentUser = await this.broker.call("users.find", {query:{username:name}});
+			
+			//const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['post']});
+			
+			const own =  await this.broker.call("posts.list", { query: { author:currentUser[0]._id }, populate: ["author", "likes"] });
+			pageContents = {
+				posts:own.rows,
+				currentUser: currentUser,
+				ifLogin: true
+			}
+			return res.render("userHome",pageContents);		
 		},
 
 				/**
