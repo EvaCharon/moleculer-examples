@@ -154,7 +154,7 @@ module.exports = {
 				simiID = allPosts[i]._id;
 			}
 		}
-		return this.adapter.update({id:json._id,similarity:minSimi,similarity_id:simiID});		
+		// return this.adapter.update({id:json._id,similarity:minSimi,similarity_id:simiID});		
 	}
 
 };
