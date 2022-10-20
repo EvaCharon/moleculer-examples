@@ -57,7 +57,20 @@
                         
                     <article class="post">
                         <%=  Object.keys(like.post) %>
-                        
+                        <!-- <header>
+                            <div class="title">
+                                <h2><a href="<%= user.username %>/<%= ifLogin %>/<%= encodeObjectID(like.post._id) %>/<%= slugify(like.post.title) %>"><%= like.post.title %></a></h2>
+                                <p><%=  truncateContent(like.post.content) %></p>
+                            </div>
+                            <div class="meta">
+                                <time class="published"><%= moment(like.post.createdAt).format('LLL') %></time>
+                            </div>
+                        </header>
+                        <footer>
+                            <ul class="stats">
+                                <li><a href="/category/<%= like.post.category %>/<%= user.username %>/<%= ifLogin %>"><%= like.post.category %></a></li>
+                            </ul>
+                        </footer> -->
                     </article>
                     <% } %>
                     
