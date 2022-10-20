@@ -54,9 +54,10 @@
 
 
                     <% for(var i in posts){var like=posts[i]; %>
-                        <%=  Object.Key(like.post) %>
+                        
                     <article class="post">
-                        <header>
+                        <%=  Object.Keys(like.post) %>
+                        <!-- <header>
                             <div class="title">
                                 <h2><a href="<%= user.username %>/<%= ifLogin %>/<%= encodeObjectID(like.post._id) %>/<%= slugify(like.post.title) %>"><%= like.post.title %></a></h2>
                                 <p><%=  truncateContent(like.post.content) %></p>
@@ -69,7 +70,7 @@
                             <ul class="stats">
                                 <li><a href="/category/<%= like.post.category %>/<%= user.username %>/<%= ifLogin %>"><%= like.post.category %></a></li>
                             </ul>
-                        </footer>
+                        </footer> -->
                     </article>
                     <% } %>
                     
