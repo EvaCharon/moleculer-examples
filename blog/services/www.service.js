@@ -64,13 +64,15 @@ module.exports = {
 			const data = await this.broker.call("users.find",{query:{username:name}});
 			
 			
-			const alllikes = await this.broker.call("likes.find",{populate:['post']});
-			let likes = alllikes.find(u => u.user==data[0]._id );
+			const alllikes = await this.broker.call("likes.find", {query:{user:user._id}});
+			//let likes = alllikes.find(u => u.user==data[0]._id );
+			
 			//const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['post']});
 			//const likes = await this.broker.call("likes.find", {query:{user:data[0]._id },populate:['post']});
 			//const own =  await this.broker.call("posts.list", { query: { author:data[0]._id }, populate: ["author", "likes"] });
 			let pageContents = {
-				posts:likes.rows,
+				//posts:likes.rows,
+				posts:alllikes.rows,
 				currentUser: [data[0]],
 				ifLogin: true
 			}

@@ -139,22 +139,22 @@ module.exports = {
 	},
 	  
 
-	async entityCreated(json, ctx) {
-		let content = json.content;
-		const allPosts = await this.adapter.find();
-		let minSimi = 0;
-		let simiID = json._id;
-		for (let i = 0;i<allPosts.length;i++){
-			if(allPosts[i]._id==json._id){
-				continue;
-			}
-			let simi = this.similar(content,allPosts[i].content,2);
-			if (simi >minSimi){
-				minSimi = simi;
-				simiID = allPosts[i]._id;
-			}
-		}
-		// return this.adapter.update({id:json._id,similarity:minSimi,similarity_id:simiID});		
-	}
+	// async entityCreated(json, ctx) {
+	// 	let content = json.content;
+	// 	const allPosts = await this.adapter.find();
+	// 	let minSimi = 0;
+	// 	let simiID = json._id;
+	// 	for (let i = 0;i<allPosts.length;i++){
+	// 		if(allPosts[i]._id==json._id){
+	// 			continue;
+	// 		}
+	// 		let simi = this.similar(content,allPosts[i].content,2);
+	// 		if (simi >minSimi){
+	// 			minSimi = simi;
+	// 			simiID = allPosts[i]._id;
+	// 		}
+	// 	}
+	// 	// return this.adapter.update({id:json._id,similarity:minSimi,similarity_id:simiID});		
+	// }
 
 };
