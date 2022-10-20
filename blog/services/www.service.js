@@ -62,10 +62,11 @@ module.exports = {
 		 async myLike(req, res){
 			let name = req.params.user_id;
 			const data = await this.broker.call("users.find",{query:{username:name}});
-			
+			const users = await this.broker.call("users.find");
+			let user = users.find(u => u.username==name);
 
-			const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['post']});
-			
+			//const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['post']});
+			const likes = await this.broker.call("likes.find", {query:{user:user._id},populate:['post']});
 			//const own =  await this.broker.call("posts.list", { query: { author:data[0]._id }, populate: ["author", "likes"] });
 			let pageContents = {
 				posts:likes.rows,
