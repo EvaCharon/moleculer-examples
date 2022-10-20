@@ -16,7 +16,7 @@ module.exports = {
 	model: Post,
 
 	settings: {
-		fields: ["_id", "title", "content", "author", "likes", "category", "coverPhoto", "createdAt"],
+		fields: ["_id", "title", "content", "author", "likes", "category", "coverPhoto", "createdAt","similarity","similarity_id"],
 		populates: {
 			author: {
 				action: "users.get",
@@ -36,11 +36,6 @@ module.exports = {
 
 		like(ctx) {
 			
-			// const users = await this.broker.call("users.find");
-			// let u_id = users.find(u => u.username==ctx.params.username)._id;
-			// let p_id = ctx.params.p_id;
-			// const like = await this.broker.call("likes.create",{post:p_id,user:u_id});
-			// return like;
 		
 		},
 
@@ -100,6 +95,66 @@ module.exports = {
 		if (count == 0) {
 			return this.seedDB();
 		}
+	},
+
+	similar(s, t, f) {
+		if (!s || !t) {
+		  return 0
+		}
+		if(s === t){
+		  return 100;
+		}
+		var l = s.length > t.length ? s.length : t.length
+		var n = s.length
+		var m = t.length
+		var d = []
+		f = f || 2
+		var min = function (a, b, c) {
+		  return a < b ? (a < c ? a : c) : (b < c ? b : c)
+		}
+		var i, j, si, tj, cost
+		if (n === 0) return m
+		if (m === 0) return n
+		for (i = 0; i <= n; i++) {
+		  d[i] = []
+		  d[i][0] = i
+		}
+		for (j = 0; j <= m; j++) {
+		  d[0][j] = j
+		}
+		for (i = 1; i <= n; i++) {
+		  si = s.charAt(i - 1)
+		  for (j = 1; j <= m; j++) {
+			tj = t.charAt(j - 1)
+			if (si === tj) {
+			  cost = 0
+			} else {
+			  cost = 1
+			}
+			d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost)
+		  }
+		}
+		let res = (1 - d[n][m] / l) *100
+		return res.toFixed(f)
+	},
+	  
+
+	async entityCreated(json, ctx) {
+		let content = json.content;
+		const allPosts = await this.adapter.find();
+		let minSimi = 0;
+		let simiID = json._id;
+		for (let i = 0;i<allPosts.length;i++){
+			if(allPosts[i]._id==json._id){
+				continue;
+			}
+			let simi = this.similar(content,allPosts[i].content,2);
+			if (simi >minSimi){
+				minSimi = simi;
+				simiID = allPosts[i]._id;
+			}
+		}
+		return this.adapter.update({id:json._id,similarity:minSimi,similarity_id:simiID});		
 	}
 
 };
