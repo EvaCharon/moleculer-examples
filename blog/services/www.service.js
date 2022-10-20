@@ -47,7 +47,7 @@ module.exports = {
 			app.get("/login",this.login);
 			app.get("/register",this.register);
 			app.get("/userHome/:user_id/:ifLogin");
-			app.get("/like/:user_id/:post_id/:ifLogin",this.like);
+			app.get("/like/:post_id/:user_id/:ifLogin",this.like);
 			app.get("/edit/:user_id/:ifLogin",this.editPost);
 			app.get("/createPost/:user_id/:ifLogin",this.createPost)
 		},
@@ -106,16 +106,17 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (req.params.user_id != "0"),
-					currentUser:user,
+					currentUser:{},
 					page:page
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
-				// if(pageContents.ifLogin){
-				// 	if (!u_id || u_id.length == 0)
-				// 		throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-				// 	const currentUser = await this.broker.call("users.find", {query:{username:name}});
-				// 	pageContents.currentUser = currentUser;
-				// }
+				if(pageContents.ifLogin){
+					if (!u_id || u_id.length == 0)
+						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
+					const currentUser = await this.broker.call("users.find", {query:{username:name}});
+					pageContents.currentUser = currentUser;
+				}
+				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("index", pageContents);
 			
 			}catch(error) {
@@ -149,10 +150,15 @@ module.exports = {
 						posts : data.rows,
 						totalPages: data.totalPages,
 						ifLogin: (req.params.user_id != "0"),
-						currentUser:user,
+						currentUser:[user],
 						page: page
 					};
-					
+					if(pageContents.ifLogin){
+						if (!u_id || u_id.length == 0)
+							throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
+						const currentUser = await this.broker.call("users.find", {query:{username:name}});
+						pageContents.currentUser = currentUser;
+					}
 					pageContents = await this.appendAdditionalData(pageContents);
 					return res.render("index", pageContents);				
 			} catch (error) {
