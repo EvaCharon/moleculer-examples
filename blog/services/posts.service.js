@@ -31,32 +31,32 @@ module.exports = {
 		},
 		pageSize: 5
 	},
-	hooks: {
-		before: {
-			/**
-			 * Register a before hook for the `create` action.
-			 * It sets a default value for the quantity field.
-			 *
-			 * @param {Context} ctx
-			 */
-			create(ctx) {
+	// hooks: {
+	// 	before: {
+	// 		/**
+	// 		 * Register a before hook for the `create` action.
+	// 		 * It sets a default value for the quantity field.
+	// 		 *
+	// 		 * @param {Context} ctx
+	// 		 */
+	// 		create(ctx) {
 				
-				let content = ctx.params.content;
-				const allPosts = await this.adapter.find();
-				let minSimi = 0;
-				let simiID = allPosts[0]._id;
-				for (let i = 0;i<allPosts.length;i++){			
-					let simi = this.similar(content,allPosts[i].content,2);
-					if (simi >minSimi){
-						minSimi = simi;
-						simiID = allPosts[i]._id;
-					}
-				}
-				ctx.params.similarity = minSimi;
-				ctx.params.similarityID = simiID;				
-			}
-		}
-	},
+	// 			let content = ctx.params.content;
+	// 			const allPosts = await this.adapter.find();
+	// 			let minSimi = 0;
+	// 			let simiID = allPosts[0]._id;
+	// 			for (let i = 0;i<allPosts.length;i++){			
+	// 				let simi = this.similar(content,allPosts[i].content,2);
+	// 				if (simi >minSimi){
+	// 					minSimi = simi;
+	// 					simiID = allPosts[i]._id;
+	// 				}
+	// 			}
+	// 			ctx.params.similarity = minSimi;
+	// 			ctx.params.similarityID = simiID;				
+	// 		}
+	// 	}
+	// },
 	actions: {
 
 		like(ctx) {
