@@ -82,16 +82,18 @@ module.exports = {
 		 * @param {Response} res
 		 */
 		async createPost(req, res){
+			const pageSize = this.settings.pageSize;
+			const page = Number(req.query.page || 1);
 			let name = req.params.user_id;
 			const users = await this.broker.call("users.find");
-			let u_id = users.find(u => u.username==req.params.user_id)._id;
+			let user = users.find(u => u.username==req.params.user_id);
 			try{
 			
 			let fakePost = fake.entity.post();			
 			let postInfo = {
 				title: req.query.title,
 				content: req.query.content,
-				author: u_id,
+				author: user._id,
 				category: req.query.category,
 				// coverPhoto: item.coverPhoto,
 				coverPhoto: "1.jpg",
@@ -104,15 +106,16 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (req.params.user_id != "0"),
-					currentUser:{}
+					currentUser:user,
+					currentPage:page
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
-				if(pageContents.ifLogin){
-					if (!u_id || u_id.length == 0)
-						throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
-					const currentUser = await this.broker.call("users.find", {query:{username:name}});
-					pageContents.currentUser = currentUser;
-				}
+				// if(pageContents.ifLogin){
+				// 	if (!u_id || u_id.length == 0)
+				// 		throw this.handleErr(res)(new MoleculerError("Invalid user ID", 404, "INVALID_User_ID", { user_id: u_id }));
+				// 	const currentUser = await this.broker.call("users.find", {query:{username:name}});
+				// 	pageContents.currentUser = currentUser;
+				// }
 				return res.render("index", pageContents);
 			
 			}catch(error) {
@@ -127,16 +130,16 @@ module.exports = {
 		async like(req, res) {
 			const pageSize = this.settings.pageSize;
 			const page = Number(req.query.page || 1);
-			let u_id = req.params.user_id;
+			let name = req.params.user_id;
 			try {
 				const users = await this.broker.call("users.find");
-				u_id = users.find(u => u.username==req.params.user_id)._id;
-				const currentUser = await this.broker.call("users.find", {query:{username:req.params.user_id}});
+				let user = users.find(u => u.username==name);
+	
 				if(req.params.user_id == "0"){
 					console.log("Please login first!");
 				}else{
 					await this.broker.call("likes.create",{
-							user: u_id,
+							user: user._id,
 							post: decodeObjectID(req.params.post_id)
 					});
 
@@ -146,7 +149,8 @@ module.exports = {
 						posts : data.rows,
 						totalPages: data.totalPages,
 						ifLogin: (req.params.user_id != "0"),
-						currentUser:currentUser
+						currentUser:user,
+						currentPage: page
 					};
 					
 					pageContents = await this.appendAdditionalData(pageContents);
@@ -172,7 +176,8 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (req.params.user_id != "0"),
-					currentUser:{}
+					currentUser:{},
+					currentPage: page
 					
 				};
 				if(pageContents.ifLogin){
@@ -227,7 +232,8 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (u_id!=0),
-					currentUser: {}
+					currentUser: {},
+					currentPage: page
 				};
 				if(pageContents.ifLogin){
 				
@@ -263,7 +269,8 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin: (req.params.user_id != "0"),
-					currentUser:{}
+					currentUser:{},
+					currentPage: page
 				};
 				if(pageContents.ifLogin){
 					let u_id = req.params.user_id;
@@ -299,7 +306,8 @@ module.exports = {
 					posts : data.rows,
 					totalPages: data.totalPages,
 					ifLogin :(req.params.user_id != "0"),
-					currentUser:{}
+					currentUser:{},
+					currentPage: page
 				};
 				if(pageContents.ifLogin){
 					let u_id = req.params.user_id;
