@@ -17,13 +17,13 @@ module.exports = {
 	settings: {
 		fields: ["user", "post"],
 		populates: {
-			"user": {
+			user: {
 				action: "users.get",
 				params: {
 					fields: ["_id", "username", "fullName", "avatar"]
 				}
 			},
-			"post": {
+			post: {
 				action: "post.get",
 				params: {
 					fields: ["_id", "title", "author","content","catagory"],

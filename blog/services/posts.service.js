@@ -26,12 +26,36 @@ module.exports = {
 			},
 			likes(ids, docs, rule, ctx) {
 				return this.Promise.all(docs.map(doc => ctx.call("likes.count", { query: { post: doc._id } }).then(count => doc.likes = count)));
-			}
+			},
 			
 		},
 		pageSize: 5
 	},
-
+	hooks: {
+		before: {
+			/**
+			 * Register a before hook for the `create` action.
+			 * It sets a default value for the quantity field.
+			 *
+			 * @param {Context} ctx
+			 */
+			create(ctx) {
+				
+				let content = ctx.params.content;
+				const allPosts = await this.adapter.find();
+				let minSimi = 0;
+				let simiID = allPosts[0]._id;
+				for (let i = 0;i<allPosts.length;i++){			
+					let simi = this.similar(content,allPosts[i].content,2);
+					if (simi >minSimi){
+						minSimi = simi;
+						simiID = allPosts[i]._id;
+					}
+				}
+				ctx.params.similarity = minSimi;
+				ctx.params.similarityID = simiID;				
+			}
+		},
 	actions: {
 
 		like(ctx) {
@@ -40,7 +64,7 @@ module.exports = {
 		},
 
 		unlike(ctx) {
-
+		
 		}
 
 	},
@@ -87,6 +111,46 @@ module.exports = {
 				} else
 					throw error;
 			}
+		},
+		similar(s, t, f) {
+			if (!s || !t) {
+			  return 0
+			}
+			if(s === t){
+			  return 100;
+			}
+			var l = s.length > t.length ? s.length : t.length
+			var n = s.length
+			var m = t.length
+			var d = []
+			f = f || 2
+			var min = function (a, b, c) {
+			  return a < b ? (a < c ? a : c) : (b < c ? b : c)
+			}
+			var i, j, si, tj, cost
+			if (n === 0) return m
+			if (m === 0) return n
+			for (i = 0; i <= n; i++) {
+			  d[i] = []
+			  d[i][0] = i
+			}
+			for (j = 0; j <= m; j++) {
+			  d[0][j] = j
+			}
+			for (i = 1; i <= n; i++) {
+			  si = s.charAt(i - 1)
+			  for (j = 1; j <= m; j++) {
+				tj = t.charAt(j - 1)
+				if (si === tj) {
+				  cost = 0
+				} else {
+				  cost = 1
+				}
+				d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost)
+			  }
+			}
+			let res = (1 - d[n][m] / l) *100
+			return res.toFixed(f)
 		}
 	},
 
@@ -97,46 +161,7 @@ module.exports = {
 		}
 	},
 
-	similar(s, t, f) {
-		if (!s || !t) {
-		  return 0
-		}
-		if(s === t){
-		  return 100;
-		}
-		var l = s.length > t.length ? s.length : t.length
-		var n = s.length
-		var m = t.length
-		var d = []
-		f = f || 2
-		var min = function (a, b, c) {
-		  return a < b ? (a < c ? a : c) : (b < c ? b : c)
-		}
-		var i, j, si, tj, cost
-		if (n === 0) return m
-		if (m === 0) return n
-		for (i = 0; i <= n; i++) {
-		  d[i] = []
-		  d[i][0] = i
-		}
-		for (j = 0; j <= m; j++) {
-		  d[0][j] = j
-		}
-		for (i = 1; i <= n; i++) {
-		  si = s.charAt(i - 1)
-		  for (j = 1; j <= m; j++) {
-			tj = t.charAt(j - 1)
-			if (si === tj) {
-			  cost = 0
-			} else {
-			  cost = 1
-			}
-			d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost)
-		  }
-		}
-		let res = (1 - d[n][m] / l) *100
-		return res.toFixed(f)
-	},
+
 	  
 
 	// async entityCreated(json, ctx) {
