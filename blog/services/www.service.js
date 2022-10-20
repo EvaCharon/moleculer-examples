@@ -137,7 +137,7 @@ module.exports = {
 				if(req.params.user_id == "0"){
 					console.log("Please login first!");
 				}else{
-					await this.broker.call("posts.like",{
+					await this.broker.call("likes.create",{
 							user: user._id,
 							post: decodeObjectID(req.params.post_id)
 					});
