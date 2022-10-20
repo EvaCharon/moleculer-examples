@@ -107,7 +107,7 @@ module.exports = {
 					totalPages: data.totalPages,
 					ifLogin: (req.params.user_id != "0"),
 					currentUser:user,
-					currentPage:page
+					page:page
 				};
 				pageContents = await this.appendAdditionalData(pageContents);
 				// if(pageContents.ifLogin){
@@ -150,7 +150,7 @@ module.exports = {
 						totalPages: data.totalPages,
 						ifLogin: (req.params.user_id != "0"),
 						currentUser:user,
-						currentPage: page
+						page: page
 					};
 					
 					pageContents = await this.appendAdditionalData(pageContents);
@@ -177,7 +177,7 @@ module.exports = {
 					totalPages: data.totalPages,
 					ifLogin: (req.params.user_id != "0"),
 					currentUser:{},
-					currentPage: page
+					page: page
 					
 				};
 				if(pageContents.ifLogin){
@@ -234,7 +234,7 @@ module.exports = {
 					totalPages: data.totalPages,
 					ifLogin: (u_id!=0),
 					currentUser: {},
-					currentPage: page
+					page: page
 				};
 				if(pageContents.ifLogin){
 				
@@ -271,7 +271,7 @@ module.exports = {
 					totalPages: data.totalPages,
 					ifLogin: (req.params.user_id != "0"),
 					currentUser:{},
-					currentPage: page
+					page: page
 				};
 				if(pageContents.ifLogin){
 					let u_id = req.params.user_id;
@@ -308,7 +308,7 @@ module.exports = {
 					totalPages: data.totalPages,
 					ifLogin :(req.params.user_id != "0"),
 					currentUser:{},
-					currentPage: page
+					page: page
 				};
 				if(pageContents.ifLogin){
 					let u_id = req.params.user_id;
