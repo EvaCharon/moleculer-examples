@@ -42,7 +42,7 @@
             <div id="main">
                 <section id="intro"><a class="logo" href="#"><img src="/images/logo.png" alt=""></a>
                     <header>
-                        <h2><a href="/">Tech Viewer</a></h2>
+                        <h2><a href="#">My Post</a></h2>
                         <p>Blog about computer Technology making easier learning</a></p>
                     </header>
                 </section>
@@ -71,7 +71,7 @@
                     <% } %>
                     
                     <ul class="actions vertical">
-                        <li><a class="button big fit" href="/edit/<%= user.username %>/<%= ifLogin%>">Add Your Post</a></li>
+                        <li><a class="button big fit" href="/edit/<%= user.username %>/<%= ifLogin%>">Add New Post</a></li>
                     </ul>
                     
                 </section>
@@ -111,8 +111,8 @@
         <% if(ifLogin){ %>
             <section>
             <ul class="actions vertical">
-                <li><a href="/backHome/<%= user.username %>/<%= ifLogin %>">Welcome!<i class="icon fa fa-home"></i>
-                    <%= user.fullName %><%= encodeObjectID(user._id) %>
+                <li><a href="/home/<%= user.username %>/<%= ifLogin %>">Welcome!<i class="icon fa fa-home"></i>
+                    <%= user.fullName %>
                 </a></li>
                 <li><a class="button big fit" href="/">Log Out</a></li>
             </ul>
