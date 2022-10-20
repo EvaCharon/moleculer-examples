@@ -63,8 +63,9 @@ module.exports = {
 			let name = req.params.user_id;
 			const data = await this.broker.call("users.find",{query:{username:name}});
 			
-			
-			const alllikes = await this.broker.call("likes.find", {query:{user:data[0]._id}});
+			const users = await this.broker.call("users.find");
+			let user = users.find(u => u.username==name);
+			const alllikes = await this.broker.call("likes.find", {query:{user:user._id}});
 			//let likes = alllikes.find(u => u.user==data[0]._id );
 			
 			//const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['post']});
