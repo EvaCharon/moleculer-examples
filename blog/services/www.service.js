@@ -113,7 +113,7 @@ module.exports = {
 					const currentUser = await this.broker.call("users.find", {query:{username:name}});
 					pageContents.currentUser = currentUser;
 				}
-				pageContents.post.author = currentUser[0];
+				pageContents.post.author = users;
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("post", pageContents);
 			
@@ -439,10 +439,12 @@ module.exports = {
 		 async backHome(req,res) {
 			let name = req.params.user_id;
 			const currentUser = await this.broker.call("users.find", {query:{username:name}});
-			
+			const users = await this.broker.call("users.find");
+			let user = users.find(u => u.username==name);
+
 			//const likes = await this.broker.call("likes.list",{query:{user:data[0]._id},populate:['post']});
 			
-			const own =  await this.broker.call("posts.list", { query: { author:currentUser[0]._id }, populate: ["author", "likes"] });
+			const own =  await this.broker.call("posts.list", { query: { author:user._id }, populate: ["author", "likes"] });
 			pageContents = {
 				posts:own.rows,
 				currentUser: currentUser,
@@ -451,7 +453,7 @@ module.exports = {
 			return res.render("userHome",pageContents);		
 		},
 
-				/**
+		/**
 		 * redirect to register 
 		 * @param {Request} req
 		 * @param {Response} res
@@ -479,7 +481,7 @@ module.exports = {
 					author: false
 				};
 				const created = await this.broker.call("users.create",userInfo);				
-				const likes = await this.broker.call("likes.list",{query:{user:created._id},populate:['user','post']});
+				// const likes = await this.broker.call("likes.list",{query:{user:created._id},populate:['user','post']});
 				const own =  await this.broker.call("posts.list", { query: { author:created._id }, populate: ["author", "likes"] });
 				let	pageContents = {
 					posts:own.rows,
