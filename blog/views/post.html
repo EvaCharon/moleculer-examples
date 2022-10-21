@@ -71,7 +71,7 @@
                             <% if(ifLogin){ %>
                             <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(post._id) %>/<%= user.username %>/<%= ifLogin %>"><%= post.likes %></a></li>
                             <%}%>
-                            <li><%=  post.similarity.value %>% similar with<a class="icon fa-comment" href="/post/<%= user.username %>/<%= ifLogin %>/<%= encodeObjectID(""+post.similarity._id) %>/<%= slugify(post.title) %>"></a></li>
+                            <li><%=  post.similarity.value %>% similar with<a class="icon fa-comment" href="/post/<%= user.username %>/<%= ifLogin %>/<%= encodeObjectID(""+post.similarity.simi_id) %>/<%= slugify(post.title) %>"></a></li>
                         </ul>
                     </footer>
                 </article>
