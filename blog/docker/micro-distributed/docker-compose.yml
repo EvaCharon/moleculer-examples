@@ -5,7 +5,7 @@ services:
   www:
     build:
       context: ../..
-    image: node:12
+    image: ../..
     # volumes:
     #   - ../..:/mnt/logs
     env_file: env
@@ -34,7 +34,7 @@ services:
   posts:
     build:
       context: ../..
-    image: node:12
+    image: ../..
     env_file: env
     environment:
       NODEID: "node-2"
@@ -57,7 +57,7 @@ services:
   users:
     build:
       context: ../..
-    image: node:12
+    image: ../..
     env_file: env
     environment:
       NODEID: "node-3"
@@ -81,7 +81,7 @@ services:
   likes:
     build:
       context: ../..
-    image: node:12
+    image: ../..
     env_file: env
     environment:
       NODEID: "node-2"
