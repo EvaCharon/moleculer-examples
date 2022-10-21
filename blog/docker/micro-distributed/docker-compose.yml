@@ -26,7 +26,7 @@ services:
     deploy:
       placement:
         constraints: 
-          - "node.role==manager"
+         # - "node.role==manager"
           - "engine.labels.operatingsystem==ubuntu-18.04"
 
   posts:
@@ -46,10 +46,10 @@ services:
       - redis
       - mongo
     deploy:
-    #  replicas: 2
+      #replicas: 2
       placement:
         constraints: 
-          - "node.hostname==node-2"
+         # - "node.hostname==node-2"
           - "engine.labels.operatingsystem==ubuntu-18.04"
 
   users:
@@ -72,7 +72,7 @@ services:
     #  replicas: 2
       placement:
         constraints: 
-          - "node.role==manager"
+         # - "node.role==manager"
           - "engine.labels.operatingsystem==ubuntu-18.04"
 
 
@@ -96,7 +96,7 @@ services:
     #  replicas: 2
       placement:
         constraints: 
-          - "node.hostname==node-2"
+         # - "node.hostname==node-2"
           - "engine.labels.operatingsystem==ubuntu-18.04"
 
   nats:
@@ -113,7 +113,7 @@ services:
     #  replicas: 2
       placement:
         constraints: 
-          - "node.hostname==node-1"
+         # - "node.hostname==node-1"
           - "engine.labels.operatingsystem==ubuntu-18.04"
 
   traefik:
