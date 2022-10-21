@@ -23,10 +23,10 @@ services:
       - "traefik.port=4000"
       - "traefik.frontend.entryPoints=http"
       - "traefik.frontend.rule=PathPrefix:/"
-    deploy:
-      placement:
-        constraints: 
-          - "node.hostname==node-3"
+    #deploy:
+      #placement:
+        #constraints: 
+          #- "node.hostname==node-3"
           #- "engine.labels.operatingsystem==ubuntu-18.04"
 
   posts:
@@ -45,11 +45,11 @@ services:
       - nats
       - redis
       - mongo
-    deploy:
+    #deploy:
       #replicas: 2
-      placement:
-        constraints: 
-          - "node.hostname==node-2"
+      #placement:
+        #constraints: 
+          #- "node.hostname==node-2"
           #- "engine.labels.operatingsystem==ubuntu-18.04"
 
   users:
@@ -68,12 +68,11 @@ services:
       - nats
       - redis
       - mongo
-    deploy:
+    #deploy:
     #  replicas: 2
-    deploy:
-      placement:
-        constraints: 
-          - "node.hostname==node-3"
+      #placement:
+        #constraints: 
+          #- "node.hostname==node-3"
           #- "engine.labels.operatingsystem==ubuntu-18.04"
 
 
@@ -93,11 +92,11 @@ services:
       - nats
       - redis
       - mongo
-    deploy:
+    #deploy:
     #  replicas: 2
-     placement:
-       constraints: 
-        - "node.hostname==node-2"
+     #placement:
+       #constraints: 
+        #- "node.hostname==node-2"
         #- "engine.labels.operatingsystem==ubuntu-18.04"
 
   nats:
