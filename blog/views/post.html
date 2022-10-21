@@ -70,7 +70,7 @@
                 
                         <ul class="stats">
                             <li><a href="/category/<%= post.category %>/<%= user.username %>/<%= ifLogin %>"><%= post.category %></a></li>
-                            <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(post.similarity.simi_id.id) %>/<%= user.username %>/<%= ifLogin %>"><%= post.likes %></a></li>
+                            <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(""+post.similarity.simi_id) %>/<%= user.username %>/<%= ifLogin %>"><%= post.likes %></a></li>
                             <li><%=  post.similarity.value %>% similar with<a class="icon fa-comment" href="/post/<%= user.username %>/<%= ifLogin %>/<%= encodeObjectID(post._id) %>/<%= slugify(post.title) %>"></a></li>
                         </ul>
                     </footer>
