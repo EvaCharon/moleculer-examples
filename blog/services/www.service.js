@@ -489,7 +489,7 @@ module.exports = {
 				const data = await this.broker.call("users.find",{query:{username:name}});
 				console.log(data);
 				if(req.query.pwd != req.query.repeatpwd){
-					errorMsg = "Repeat passeord wrong."
+					errorMsg = "Repeat password wrong."
 					let pageContents = {
 						msg : errorMsg,
 						ifLogin: false

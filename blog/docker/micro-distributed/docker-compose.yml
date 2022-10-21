@@ -23,6 +23,11 @@ services:
       - "traefik.port=4000"
       - "traefik.frontend.entryPoints=http"
       - "traefik.frontend.rule=PathPrefix:/"
+    deploy:
+      placement:
+        constraints: 
+          - "node.role==manager"
+          - "engine.labels.operatingsystem==ubuntu-18.04"
 
   posts:
     build:
@@ -40,6 +45,12 @@ services:
       - nats
       - redis
       - mongo
+    deploy:
+    #  replicas: 2
+      placement:
+        constraints: 
+          - "node.hostname==node-2"
+          - "engine.labels.operatingsystem==ubuntu-18.04"
 
   users:
     build:
@@ -57,8 +68,13 @@ services:
       - nats
       - redis
       - mongo
-    #deploy:
+    deploy:
     #  replicas: 2
+      placement:
+        constraints: 
+          - "node.role==manager"
+          - "engine.labels.operatingsystem==ubuntu-18.04"
+
 
   likes:
     build:
@@ -76,8 +92,12 @@ services:
       - nats
       - redis
       - mongo
-    #deploy:
+    deploy:
     #  replicas: 2
+      placement:
+        constraints: 
+          - "node.hostname==node-2"
+          - "engine.labels.operatingsystem==ubuntu-18.04"
 
   nats:
     image: nats
@@ -89,6 +109,12 @@ services:
     image: mongo
     # volumes:
     #   - ../../db:/data/db
+    deploy:
+    #  replicas: 2
+      placement:
+        constraints: 
+          - "node.hostname==node-1"
+          - "engine.labels.operatingsystem==ubuntu-18.04"
 
   traefik:
     image: traefik:1.7
