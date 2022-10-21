@@ -74,13 +74,13 @@ module.exports = {
 		
 		},
 		async getSimilarity(ctx){
-				// let id = ctx.params.id;
-				// const allPosts = await thid.adapter.find();
-				// const currentPost = allPosts.find(p => p._id==id);
-				// let content = currentPost.content;
+				let id = ctx.params.id;
+				const allPosts = await thid.adapter.find();
+				const currentPost = allPosts.find(p => p._id==id);
+				let content = currentPost.content;
 				
-				// let maxSimi = 0;
-				// let simiID = id;
+				let maxSimi = 0;
+				let simiID = id;
 				// for (let i = 0;i<allPosts.length;i++){
 				// 	if(allPosts[i]._id==id){
 				// 		continue;
@@ -91,11 +91,11 @@ module.exports = {
 				// 		simiID = allPosts[i]._id;
 				// 	}
 				// }
-				// let rtn = {
-				// 	value:maxSimi,
-				// 	simi_id:simiID
-				// };
-				return ctx;		
+				let rtn = {
+					value:maxSimi,
+					simi_id:simiID
+				};
+				return rtn;		
 		}
 
 	},
