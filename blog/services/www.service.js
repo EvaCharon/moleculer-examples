@@ -118,7 +118,7 @@ module.exports = {
 				author: user._id,
 				category: req.query.category,
 				// coverPhoto: item.coverPhoto,
-				coverPhoto: "1.jpg",
+				coverPhoto: ""+fake.random.number(1, 5)+".jpg",
 				createdAt: fakePost.created
 			};
 				const created = await this.broker.call("posts.create",postInfo);				
@@ -484,11 +484,17 @@ module.exports = {
 			let name = req.query.username;
 			name = name.toLowerCase();
 			let errorMsg = "";
+
 			try{
 				const data = await this.broker.call("users.find",{query:{username:name}});
 				console.log(data);
 				if(req.query.pwd != req.query.repeatpwd){
-					errorMsg = "Repead passeord wrong."
+					errorMsg = "Repeat passeord wrong."
+					let pageContents = {
+						msg : errorMsg,
+						ifLogin: false
+					};
+				return res.render("register", pageContents);
 				}else if (data.length != 0){
 					errorMsg = "Username exists.";
 					let pageContents = {

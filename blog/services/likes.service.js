@@ -53,7 +53,7 @@ module.exports = {
 				let promises = [];
 
 				users.forEach(user => {
-					let c = fake.random.number(8, 15);
+					let c = fake.random.number(1,5);
 					let postIDs = fake.utimes(fake.random.arrayElement, c, posts).map(post => post._id);
 					promises.push(this.adapter.insertMany(postIDs.map(postID => {
 						return {
