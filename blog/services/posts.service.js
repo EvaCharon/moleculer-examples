@@ -75,7 +75,7 @@ module.exports = {
 		},
 		async getSimilarity(ctx){
 				let id = ctx.params.id;
-				const allPosts = await thid.adapter.find();
+				const allPosts = await this.adapter.find();
 				const currentPost = allPosts.find(p => p._id==id);
 				let content = currentPost.content;
 				
