@@ -419,6 +419,7 @@ module.exports = {
 	 	*/
 		async login(req,res) {
 			let name = req.query.username;
+			name = name.toLowerCase();
 			let pwd = req.query.pwd;
 			let errorMsg = "";
 			try{
@@ -481,11 +482,14 @@ module.exports = {
 	 	*/
 		 async register(req,res) {
 			let name = req.query.username;
+			name = name.toLowerCase();
 			let errorMsg = "";
 			try{
 				const data = await this.broker.call("users.find",{query:{username:name}});
 				console.log(data);
-				if (data.length != 0){
+				if(req.query.pwd != req.query.repeatpwd){
+					errorMsg = "Repead passeord wrong."
+				}else if (data.length != 0){
 					errorMsg = "Username exists.";
 					let pageContents = {
 						msg : errorMsg,
@@ -494,7 +498,7 @@ module.exports = {
 				return res.render("register", pageContents);
 				}
 				let userInfo = {
-					username: req.query.username,
+					username: name,
 					password: req.query.pwd,
 					fullName: req.query.fullname,
 					email: req.query.email,
