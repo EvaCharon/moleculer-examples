@@ -95,7 +95,7 @@ module.exports = {
 				// 	value:maxSimi,
 				// 	simi_id:simiID
 				// };
-				return ctx.params;		
+				return ctx;		
 		}
 
 	},
