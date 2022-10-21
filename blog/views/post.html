@@ -65,8 +65,8 @@
                         <img src="/images/covers/<%= post.coverPhoto %>" alt="">
                     </a>
                     <p><%=  post.content %></p>
-                    <%=  post.similarity.value %>
-                    <%=  post.similarity.simi_id %>
+
+                    <%=  Object.keys(post.similarity) %>
                     <footer>
                 
                         <ul class="stats">
