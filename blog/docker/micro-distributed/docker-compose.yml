@@ -5,9 +5,9 @@ services:
   www:
     build:
       context: ../..
-    #image: moleculer-blog
+    image: node:12
     # volumes:
-    #   - ../..:/mnt/blog
+    #   - ../..:/mnt/logs
     env_file: env
     environment:
       NODEID: "node-3"
@@ -34,9 +34,7 @@ services:
   posts:
     build:
       context: ../..
-    #image: moleculer-blog
-    # volumes:
-    #   - ../..:/mnt/blog
+    image: node:12
     env_file: env
     environment:
       NODEID: "node-2"
@@ -59,7 +57,7 @@ services:
   users:
     build:
       context: ../..
-    #image: moleculer-blog
+    image: node:12
     env_file: env
     environment:
       NODEID: "node-3"
@@ -83,7 +81,7 @@ services:
   likes:
     build:
       context: ../..
-    #image: moleculer-blog
+    image: node:12
     env_file: env
     environment:
       NODEID: "node-2"
