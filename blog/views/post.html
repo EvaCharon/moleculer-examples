@@ -65,16 +65,12 @@
                         <img src="/images/covers/<%= post.coverPhoto %>" alt="">
                     </a>
                     <p><%=  post.content %></p>
-
-                    <%=  Object.keys(post.similarity) %>
-                    <%=  post.similarity.simi_id %>
-                    <%=  post.similarity.value %>
                     <footer>
                 
                         <ul class="stats">
                             <li><a href="/category/<%= post.category %>/<%= user.username %>/<%= ifLogin %>"><%= post.category %></a></li>
                             <li><a class="icon fa-heart" href="/like/<%= encodeObjectID(post._id) %>/<%= user.username %>/<%= ifLogin %>"><%= post.likes %></a></li>
-                            <li><a class="icon fa-comment" href="/post/<%= encodeObjectID(post._id) %>#comments"></a></li>
+                            <li><%=  post.similarity.value %>% similar with<a class="icon fa-comment" href="/post/<%= user.username %>/<%= ifLogin %>/<%= encodeObjectID(post.similarity.simi_id) %>/<%= slugify(post.title) %>"></a></li>
                         </ul>
                     </footer>
                 </article>

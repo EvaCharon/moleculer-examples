@@ -122,7 +122,7 @@ module.exports = {
 				createdAt: fakePost.created
 			};
 				const created = await this.broker.call("posts.create",postInfo);				
-
+				const similarity = await this.broker.call("posts.getSimilarity", { id:created._id });
 				let pageContents = {
 					post : created,
 					title : created.title,
@@ -135,6 +135,7 @@ module.exports = {
 					pageContents.currentUser = currentUser;
 				}
 				pageContents.post.author = user;
+				pageContents.post.similarity = similarity;
 				pageContents = await this.appendAdditionalData(pageContents);
 				return res.render("post", pageContents);
 			
