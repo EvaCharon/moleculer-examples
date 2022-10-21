@@ -81,16 +81,16 @@ module.exports = {
 				
 				let maxSimi = 0;
 				let simiID = id;
-				for (let i = 0;i<allPosts.length;i++){
-					if(allPosts[i]._id==id){
-						continue;
-					}
-					let simi = this.similar(content,allPosts[i].content,2);
-					if (simi >maxSimi){
-						maxSimi = simi;
-						simiID = allPosts[i]._id;
-					}
-				}
+				// for (let i = 0;i<allPosts.length;i++){
+				// 	if(allPosts[i]._id==id){
+				// 		continue;
+				// 	}
+				// 	let simi = this.similar(content,allPosts[i].content,2);
+				// 	if (simi >maxSimi){
+				// 		maxSimi = simi;
+				// 		simiID = allPosts[i]._id;
+				// 	}
+				// }
 				let rtn = {
 					value:maxSimi,
 					simi_id:simiID

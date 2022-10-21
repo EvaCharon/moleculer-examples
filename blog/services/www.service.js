@@ -359,7 +359,7 @@ module.exports = {
 
 			try {
 				const post = await this.broker.call("posts.get", { id, populate: ["author", "likes"] });
-				const similarity = await this.broker.call("posts.getSimilarity", { query:{ id:id } });
+				const similarity = await this.broker.call("posts.getSimilarity", { id:id });
 				if (!post)
 					throw new MoleculerError("Post not found", 404, "NOT_FOUND_POST", { id: req.params.id });
 
