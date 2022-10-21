@@ -27,42 +27,42 @@ module.exports = {
 			likes(ids, docs, rule, ctx) {
 				return this.Promise.all(docs.map(doc => ctx.call("likes.count", { query: { post: doc._id } }).then(count => doc.likes = count)));
 			},
-			// similarity(ids, docs, rule, ctx){
-			// 	return this.Promise.all(docs.map(doc => ctx.call("posts.getSimilarity", { query: { id: doc._id }}).then(s => doc.similarity = s)));
-			// }
+			similarity(ids, docs, rule, ctx){
+				return this.Promise.all(docs.map(doc => ctx.call("posts.getSimilarity", { query: { id: doc._id }}).then(s => doc.similarity = s)));
+			}
 			
 		},
 		pageSize: 5
 	},
-	hooks: {
-		before: {
-			/**
-			 * Register a before hook for the `create` action.
-			 * It sets a default value for the quantity field.
-			 *
-			 * @param {Context} ctx
-			 */
-			 async create(ctx) {
+	//hooks: {
+	// 	before: {
+	// 		/**
+	// 		 * Register a before hook for the `create` action.
+	// 		 * It sets a default value for the quantity field.
+	// 		 *
+	// 		 * @param {Context} ctx
+	// 		 */
+	// 		 async create(ctx) {
 				
-				let content = ctx.params.content;
-				const allPosts = await this.adapter.find();
-				let minSimi = 0;
-				let simiID = allPosts[0]._id;
-				for (let i = 0;i<allPosts.length;i++){			
-					let simi = this.similar(content,allPosts[i].content,2);
-					if (simi >minSimi){
-						minSimi = simi;
-						simiID = allPosts[i]._id;
-					}
-				}
-				let rtn = {
-					value:minSimi,
-					simi_id:simiID
-				};
-				ctx.params.similarity = rtn;	
-			}
-		}
-	},
+	// 			let content = ctx.params.content;
+	// 			const allPosts = await this.adapter.find();
+	// 			let minSimi = 0;
+	// 			let simiID = allPosts[0]._id;
+	// 			for (let i = 0;i<allPosts.length;i++){			
+	// 				let simi = this.similar(content,allPosts[i].content,2);
+	// 				if (simi >minSimi){
+	// 					minSimi = simi;
+	// 					simiID = allPosts[i]._id;
+	// 				}
+	// 			}
+	// 			let rtn = {
+	// 				value:minSimi,
+	// 				simi_id:simiID
+	// 			};
+	// 			ctx.params.similarity = rtn;	
+	// 		}
+	// 	}
+	// },
 	actions: {
 
 		like(ctx) {
