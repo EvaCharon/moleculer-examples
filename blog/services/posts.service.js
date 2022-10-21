@@ -50,7 +50,7 @@ module.exports = {
 				let simiID = allPosts[0]._id;
 				for (let i = 0;i<allPosts.length;i++){			
 					let simi = this.similar(content,allPosts[i].content,2);
-					if (simi >minSimi){cd ../.
+					if (simi >minSimi){
 						minSimi = simi;
 						simiID = allPosts[i]._id;
 					}
