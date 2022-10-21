@@ -358,8 +358,8 @@ module.exports = {
 				return this.handleErr(res)(this.Promise.reject(new MoleculerError("Invalid POST ID", 404, "INVALID_POST_ID", { id: req.params.id })));
 
 			try {
-				const post = await this.broker.call("posts.get", { id, populate: ["author", "likes","similarity"] });
-
+				const post = await this.broker.call("posts.get", { id, populate: ["author", "likes"] });
+				const similarity = await this.broker.call("posts.getSimilarity", { query:{ id:id } });
 				if (!post)
 					throw new MoleculerError("Post not found", 404, "NOT_FOUND_POST", { id: req.params.id });
 
@@ -370,6 +370,7 @@ module.exports = {
 					ifLogin :(req.params.user_id != "0"),
 					currentUser:{}
 				};
+				pageContents.post.similarity = similarity;
 				if(pageContents.ifLogin){
 					let u_id = req.params.user_id;
 					if (!u_id || u_id.length == 0)
