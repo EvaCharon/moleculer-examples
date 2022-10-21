@@ -26,8 +26,8 @@ services:
     deploy:
       placement:
         constraints: 
-         # - "node.role==manager"
-          - "engine.labels.operatingsystem==ubuntu-18.04"
+          - "node.role==manager"
+          #- "engine.labels.operatingsystem==ubuntu-18.04"
 
   posts:
     build:
@@ -49,8 +49,8 @@ services:
       #replicas: 2
       placement:
         constraints: 
-         # - "node.hostname==node-2"
-          - "engine.labels.operatingsystem==ubuntu-18.04"
+          - "node.hostname==node-2"
+          #- "engine.labels.operatingsystem==ubuntu-18.04"
 
   users:
     build:
@@ -70,10 +70,11 @@ services:
       - mongo
     deploy:
     #  replicas: 2
+    deploy:
       placement:
         constraints: 
-         # - "node.role==manager"
-          - "engine.labels.operatingsystem==ubuntu-18.04"
+          - "node.role==manager"
+          #- "engine.labels.operatingsystem==ubuntu-18.04"
 
 
   likes:
@@ -94,10 +95,10 @@ services:
       - mongo
     deploy:
     #  replicas: 2
-      placement:
-        constraints: 
-         # - "node.hostname==node-2"
-          - "engine.labels.operatingsystem==ubuntu-18.04"
+     placement:
+       constraints: 
+        - "node.hostname==node-2"
+        #- "engine.labels.operatingsystem==ubuntu-18.04"
 
   nats:
     image: nats
@@ -113,8 +114,8 @@ services:
     #  replicas: 2
       placement:
         constraints: 
-         # - "node.hostname==node-1"
-          - "engine.labels.operatingsystem==ubuntu-18.04"
+          - "node.hostname==node-1"
+          #- "engine.labels.operatingsystem==ubuntu-18.04"
 
   traefik:
     image: traefik:1.7
