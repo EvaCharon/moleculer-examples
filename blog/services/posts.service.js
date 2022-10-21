@@ -27,9 +27,9 @@ module.exports = {
 			likes(ids, docs, rule, ctx) {
 				return this.Promise.all(docs.map(doc => ctx.call("likes.count", { query: { post: doc._id } }).then(count => doc.likes = count)));
 			},
-			similarity(ids, docs, rule, ctx){
-				return this.Promise.all(docs.map(doc => ctx.call("posts.getSimilarity", { query: { id: doc._id }}).then(s => doc.similarity = s)));
-			}
+			// similarity(ids, docs, rule, ctx){
+			// 	return this.Promise.all(docs.map(doc => ctx.call("posts.getSimilarity", { query: { id: doc._id }}).then(s => doc.similarity = s)));
+			// }
 			
 		},
 		pageSize: 5
