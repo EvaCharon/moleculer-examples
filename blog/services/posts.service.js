@@ -28,7 +28,7 @@ module.exports = {
 				return this.Promise.all(docs.map(doc => ctx.call("likes.count", { query: { post: doc._id } }).then(count => doc.likes = count)));
 			},
 			similarity(ids, docs, rule, ctx){
-				return this.Promise.all(docs.map(doc => ctx.call("posts.getSimilarity", { query: { id: doc._id }}).then(similarity => doc.similarity = similarity)));
+				return this.Promise.all(docs.map(doc => ctx.call("posts.getSimilarity", { query: { id: doc._id }}).then(s => doc.similarity = s)));
 			}
 			
 		},
@@ -89,7 +89,7 @@ module.exports = {
 					}
 				}
 				let rtn = {
-					value:simi,
+					value:minSimi,
 					simi_id:simiID
 				};
 				return rtn;		
