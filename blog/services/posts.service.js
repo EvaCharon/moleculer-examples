@@ -16,7 +16,7 @@ module.exports = {
 	model: Post,
 
 	settings: {
-		fields: ["_id", "title", "content", "author", "likes", "category", "coverPhoto", "createdAt","similarity","similarity_id"],
+		fields: ["_id", "title", "content", "author", "likes", "category", "coverPhoto", "createdAt","similarity"],
 		populates: {
 			author: {
 				action: "users.get",
@@ -27,6 +27,9 @@ module.exports = {
 			likes(ids, docs, rule, ctx) {
 				return this.Promise.all(docs.map(doc => ctx.call("likes.count", { query: { post: doc._id } }).then(count => doc.likes = count)));
 			},
+			similarity(ids, docs, rule, ctx){
+				return this.Promise.all(docs.map(doc => ctx.call("posts.getSimilarity", { query: { id: doc._id }}).then(similarity => doc.similarity = similarity)));
+			}
 			
 		},
 		pageSize: 5
@@ -66,6 +69,30 @@ module.exports = {
 
 		unlike(ctx) {
 		
+		},
+		getSimilarity(ctx){
+				let id = ctx.query.id;
+				const allPosts = await ctx.call("posts.find");
+				const currentPost = allPosts.find(p=>p._id==id);
+				let content = currentPost.content;
+				
+				let minSimi = 0;
+				let simiID = id;
+				for (let i = 0;i<allPosts.length;i++){
+					if(allPosts[i]._id==id){
+						continue;
+					}
+					let simi = this.similar(content,allPosts[i].content,2);
+					if (simi >minSimi){
+						minSimi = simi;
+						simiID = allPosts[i]._id;
+					}
+				}
+				let rtn = {
+					value:simi,
+					simi_id:simiID
+				};
+				return rtn;		
 		}
 
 	},
