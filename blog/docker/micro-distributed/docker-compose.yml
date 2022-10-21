@@ -26,7 +26,7 @@ services:
     deploy:
       placement:
         constraints: 
-          - "node.role==manager"
+          - "node.hostname==node-3"
           #- "engine.labels.operatingsystem==ubuntu-18.04"
 
   posts:
@@ -73,7 +73,7 @@ services:
     deploy:
       placement:
         constraints: 
-          - "node.role==manager"
+          - "node.hostname==node-3"
           #- "engine.labels.operatingsystem==ubuntu-18.04"
 
 
