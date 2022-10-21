@@ -34,32 +34,35 @@ module.exports = {
 		},
 		pageSize: 5
 	},
-	// hooks: {
-	// 	before: {
-	// 		/**
-	// 		 * Register a before hook for the `create` action.
-	// 		 * It sets a default value for the quantity field.
-	// 		 *
-	// 		 * @param {Context} ctx
-	// 		 */
-	// 		create(ctx) {
+	hooks: {
+		before: {
+			/**
+			 * Register a before hook for the `create` action.
+			 * It sets a default value for the quantity field.
+			 *
+			 * @param {Context} ctx
+			 */
+			 async create(ctx) {
 				
-	// 			let content = ctx.params.content;
-	// 			const allPosts = await this.adapter.find();
-	// 			let minSimi = 0;
-	// 			let simiID = allPosts[0]._id;
-	// 			for (let i = 0;i<allPosts.length;i++){			
-	// 				let simi = this.similar(content,allPosts[i].content,2);
-	// 				if (simi >minSimi){
-	// 					minSimi = simi;
-	// 					simiID = allPosts[i]._id;
-	// 				}
-	// 			}
-	// 			ctx.params.similarity = minSimi;
-	// 			ctx.params.similarityID = simiID;				
-	// 		}
-	// 	}
-	// },
+				let content = ctx.params.content;
+				const allPosts = await this.adapter.find();
+				let minSimi = 0;
+				let simiID = allPosts[0]._id;
+				for (let i = 0;i<allPosts.length;i++){			
+					let simi = this.similar(content,allPosts[i].content,2);
+					if (simi >minSimi){
+						minSimi = simi;
+						simiID = allPosts[i]._id;
+					}
+				}
+				let rtn = {
+					value:minSimi,
+					simi_id:simiID
+				};
+				ctx.params.similarity = rtn;	
+			}
+		}
+	},
 	actions: {
 
 		like(ctx) {
@@ -70,29 +73,29 @@ module.exports = {
 		unlike(ctx) {
 		
 		},
-		getSimilarity(ctx){
+		async getSimilarity(ctx){
 				let id = ctx.query.id;
-				const allPosts = await ctx.call("posts.find");
+				const allPosts = await thid.adapter.find();
 				const currentPost = allPosts.find(p => p._id==id);
 				let content = currentPost.content;
 				
 				let maxSimi = 0;
 				let simiID = id;
-		// 		for (let i = 0;i<allPosts.length;i++){
-		// 			if(allPosts[i]._id==id){
-		// 				continue;
-		// 			}
-		// 			let simi = this.similar(content,allPosts[i].content,2);
-		// 			if (simi >maxSimi){
-		// 				maxSimi = simi;
-		// 				simiID = allPosts[i]._id;
-		// 			}
-		// 		}
-		// 		let rtn = {
-		// 			value:maxSimi,
-		// 			simi_id:simiID
-		// 		};
-		// 		return rtn;		
+				for (let i = 0;i<allPosts.length;i++){
+					if(allPosts[i]._id==id){
+						continue;
+					}
+					let simi = this.similar(content,allPosts[i].content,2);
+					if (simi >maxSimi){
+						maxSimi = simi;
+						simiID = allPosts[i]._id;
+					}
+				}
+				let rtn = {
+					value:maxSimi,
+					simi_id:simiID
+				};
+				return rtn;		
 		}
 
 	},
