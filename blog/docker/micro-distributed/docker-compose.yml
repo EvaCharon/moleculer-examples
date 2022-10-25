@@ -48,7 +48,7 @@ services:
       - redis
       - mongo
     deploy:
-      replicas: 2
+      #replicas: 2
       placement:
         constraints: 
           - "node.hostname==node-2"
@@ -71,7 +71,7 @@ services:
       - redis
       - mongo
     deploy:
-     replicas: 2
+     #replicas: 2
       placement:
         constraints: 
           - "node.hostname==node-3"
