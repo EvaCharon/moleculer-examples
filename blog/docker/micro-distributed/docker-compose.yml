@@ -5,7 +5,7 @@ services:
   www:
     build:
       context: ../..
-    image: ../..
+    image: tech-viewer
     # volumes:
     #   - ../..:/mnt/logs
     env_file: env
@@ -25,16 +25,16 @@ services:
       - "traefik.port=4000"
       - "traefik.frontend.entryPoints=http"
       - "traefik.frontend.rule=PathPrefix:/"
-    #deploy:
-      #placement:
-        #constraints: 
-          #- "node.hostname==node-3"
-          #- "engine.labels.operatingsystem==ubuntu-18.04"
+    deploy:
+      placement:
+        constraints: 
+          - "node.hostname==node-3"
+        #  - "engine.labels.operatingsystem==ubuntu-18.04"
 
   posts:
     build:
       context: ../..
-    image: ../..
+    image: tech-viewer
     env_file: env
     environment:
       NODEID: "node-2"
@@ -47,17 +47,17 @@ services:
       - nats
       - redis
       - mongo
-    #deploy:
-      #replicas: 2
-      #placement:
-        #constraints: 
-          #- "node.hostname==node-2"
-          #- "engine.labels.operatingsystem==ubuntu-18.04"
+    deploy:
+      replicas: 2
+      placement:
+        constraints: 
+          - "node.hostname==node-2"
+        #  - "engine.labels.operatingsystem==ubuntu-18.04"
 
   users:
     build:
       context: ../..
-    image: ../..
+    image: tech-viewer
     env_file: env
     environment:
       NODEID: "node-3"
@@ -70,18 +70,18 @@ services:
       - nats
       - redis
       - mongo
-    #deploy:
-    #  replicas: 2
-      #placement:
-        #constraints: 
-          #- "node.hostname==node-3"
-          #- "engine.labels.operatingsystem==ubuntu-18.04"
+    deploy:
+     replicas: 2
+      placement:
+        constraints: 
+          - "node.hostname==node-3"
+        #  - "engine.labels.operatingsystem==ubuntu-18.04"
 
 
   likes:
     build:
       context: ../..
-    image: ../..
+    image: tech-viewer
     env_file: env
     environment:
       NODEID: "node-2"
@@ -94,12 +94,12 @@ services:
       - nats
       - redis
       - mongo
-    #deploy:
-    #  replicas: 2
-     #placement:
-       #constraints: 
-        #- "node.hostname==node-2"
-        #- "engine.labels.operatingsystem==ubuntu-18.04"
+    deploy:
+     #replicas: 2
+     placement:
+       constraints: 
+        - "node.hostname==node-2"
+      #  - "engine.labels.operatingsystem==ubuntu-18.04"
 
   nats:
     image: nats
